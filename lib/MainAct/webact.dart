@@ -1,17 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:hushh_for_students_ios/MiniStore/hfsministore.dart';
-
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
-
-  runApp(const WebAct());
-}
 
 class WebAct extends StatelessWidget {
   const WebAct({super.key});
@@ -52,7 +44,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
     // Retrieve the version code from Firestore
     final FirebaseFirestore firestore = FirebaseFirestore.instance;
-    final DocumentReference versionUpdateRef = firestore.collection('version_update_ios').doc('versionCodehfs');
+    final DocumentReference versionUpdateRef =
+        firestore.collection('version_update_ios').doc('versionCodehfs');
 
     versionUpdateRef.snapshots().listen((DocumentSnapshot snapshot) {
       if (snapshot.exists) {
@@ -95,7 +88,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Future<void> _retrieveUpdateLink() async {
     final FirebaseFirestore firestore = FirebaseFirestore.instance;
-    final DocumentReference updateLinkRef = firestore.collection('version_update_ios').doc('apkupdatedlink');
+    final DocumentReference updateLinkRef =
+        firestore.collection('version_update_ios').doc('apkupdatedlink');
 
     updateLinkRef.get().then((DocumentSnapshot documentSnapshot) {
       if (documentSnapshot.exists) {
@@ -232,7 +226,12 @@ class ProductCard extends StatelessWidget {
   final String title;
   final String subtitle;
 
-  const ProductCard({required this.imagePath, required this.title, required this.subtitle, Key? key}) : super(key: key);
+  const ProductCard(
+      {required this.imagePath,
+      required this.title,
+      required this.subtitle,
+      Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -275,14 +274,19 @@ class ProductCard extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => HfsMiniStoreScreen(storeName: 'OAC', url: 'https://hushh-for-students-store-vone.mini.site'),
+                          builder: (context) => HfsMiniStoreScreen(
+                              storeName: 'OAC',
+                              url:
+                                  'https://hushh-for-students-store-vone.mini.site'),
                         ),
                       );
                     } else if (title.toLowerCase().contains('thapa')) {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => HfsMiniStoreScreen(storeName: 'Thapa', url: 'https://hushh-for-students.mini.store'),
+                          builder: (context) => HfsMiniStoreScreen(
+                              storeName: 'Thapa',
+                              url: 'https://hushh-for-students.mini.store'),
                         ),
                       );
                     }

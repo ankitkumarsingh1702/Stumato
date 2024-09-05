@@ -77,4 +77,5 @@ class DefaultFirebaseOptions {
     iosClientId: '621906786515-a6rnpl15dop3fedohobbj0bs3p42fvhh.apps.googleusercontent.com',
     iosBundleId: 'com.example.hushhForStudentsIos',
   );
+
 }
