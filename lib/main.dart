@@ -15,12 +15,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Hushh for Students', // Changed app name here
+      title: 'Hushh for Students', // hfs
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const WebAct(),  // Set WebAct as the home screen
+      home: const WebAct(),
       debugShowCheckedModeBanner: false, // This removes the debug banner
     );
   }
