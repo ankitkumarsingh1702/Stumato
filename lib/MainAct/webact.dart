@@ -1,31 +1,157 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:package_info_plus/package_info_plus.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:firebase_core/firebase_core.dart'; // Import Firebase Core
 import 'package:hushh_for_students/MiniStore/hfsministore.dart'; // Import the hfsministore.dart file
 
-void main() {
-  runApp(MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized(); // Ensure widgets are initialized
+  await Firebase.initializeApp(); // Initialize Firebase
+
+  runApp(const WebAct());
 }
 
-class MyApp extends StatelessWidget {
+class WebAct extends StatelessWidget {
+  const WebAct({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: HomeScreen(),
-      debugShowCheckedModeBanner: false,
+      title: 'Hushh for Students',
+      home: const HomeScreen(),
+      debugShowCheckedModeBanner: false, // This removes the debug banner
     );
   }
 }
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
+
+  @override
+  _HomeScreenState createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  @override
+  void initState() {
+    super.initState();
+    _checkVersionAndUpdate();  // Add the Firebase version check
+  }
+
+  Future<void> _checkVersionAndUpdate() async {
+    // Get the installed version of the app
+    final PackageInfo packageInfo = await PackageInfo.fromPlatform();
+    String installedVersion = packageInfo.buildNumber;
+    Fluttertoast.showToast(
+      msg: 'Installed Version Code: $installedVersion',
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.BOTTOM,
+    );
+
+    // Fetch the version code from Firestore
+    final FirebaseFirestore firestore = FirebaseFirestore.instance;
+    final DocumentReference versionUpdateRef = firestore.collection('version_update_ios').doc('versionCodehfs');
+
+    versionUpdateRef.snapshots().listen((DocumentSnapshot snapshot) {
+      if (snapshot.exists) {
+        String firestoreVersionCode = snapshot.get('versionCode') ?? '';
+        Fluttertoast.showToast(
+          msg: 'Firestore Version Code Retrieved: $firestoreVersionCode',
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+        );
+
+        if (firestoreVersionCode != installedVersion) {
+          Fluttertoast.showToast(
+            msg: 'Version mismatch: Updating app...',
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+          );
+          _retrieveUpdateLink();
+        } else {
+          Fluttertoast.showToast(
+            msg: 'App is up-to-date.',
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+          );
+        }
+      } else {
+        Fluttertoast.showToast(
+          msg: 'No version info found in Firestore.',
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+        );
+      }
+    }, onError: (error) {
+      Fluttertoast.showToast(
+        msg: 'Error fetching Firestore version: $error',
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+      );
+    });
+  }
+
+  Future<void> _retrieveUpdateLink() async {
+    final FirebaseFirestore firestore = FirebaseFirestore.instance;
+    final DocumentReference updateLinkRef = firestore.collection('version_update_ios').doc('apkupdatedlink');
+
+    updateLinkRef.get().then((DocumentSnapshot documentSnapshot) {
+      if (documentSnapshot.exists) {
+        String? updateLink = documentSnapshot.get('link');
+        _openUpdateLink(updateLink);
+      } else {
+        Fluttertoast.showToast(
+          msg: 'Update link document does not exist.',
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+        );
+      }
+    }).catchError((error) {
+      Fluttertoast.showToast(
+        msg: 'Failed to retrieve update link: $error',
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+      );
+    });
+  }
+
+  Future<void> _openUpdateLink(String? link) async {
+    if (link != null && link.isNotEmpty) {
+      Fluttertoast.showToast(
+        msg: 'Opening update link: $link',
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+      );
+      if (await canLaunch(link)) {
+        await launch(link);
+      } else {
+        Fluttertoast.showToast(
+          msg: 'Could not launch $link',
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+        );
+      }
+    } else {
+      Fluttertoast.showToast(
+        msg: 'Update link is empty or null.',
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFF1C1C1E), // Background color to match your design
+      backgroundColor: const Color(0xFF1C1C1E), // Background color to match your design
       body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 20.0),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 20.0),
               child: Text(
                 'Hushh for Students',
                 style: TextStyle(
@@ -35,8 +161,8 @@ class HomeScreen extends StatelessWidget {
                 ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -61,8 +187,8 @@ class HomeScreen extends StatelessWidget {
             ),
             Expanded(
               child: GridView.builder(
-                padding: EdgeInsets.all(16.0),
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                padding: const EdgeInsets.all(16.0),
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
                   crossAxisSpacing: 10.0,
                   mainAxisSpacing: 10.0,
@@ -113,7 +239,7 @@ class ProductCard extends StatelessWidget {
   final String title;
   final String subtitle;
 
-  ProductCard({required this.imagePath, required this.title, required this.subtitle, Key? key}) : super(key: key);
+  const ProductCard({required this.imagePath, required this.title, required this.subtitle, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -135,7 +261,7 @@ class ProductCard extends StatelessWidget {
               children: [
                 Text(
                   title,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 12,
                     fontWeight: FontWeight.bold,
                     color: Colors.white,
@@ -143,12 +269,12 @@ class ProductCard extends StatelessWidget {
                 ),
                 Text(
                   subtitle,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 10,
                     color: Colors.white,
                   ),
                 ),
-                SizedBox(height: 4.0),
+                const SizedBox(height: 4.0),
                 ElevatedButton(
                   onPressed: () {
                     Navigator.push(
@@ -162,7 +288,7 @@ class ProductCard extends StatelessWidget {
                     backgroundColor: Colors.black, // Background color
                     foregroundColor: Colors.white, // Text color
                   ),
-                  child: Text('Buy Now'),
+                  child: const Text('Buy Now'),
                 ),
               ],
             ),
