@@ -33,6 +33,7 @@ class _AuthPhoneScreenState extends State<AuthPhoneScreen> {
       });
     } else {
       final fullPhoneNumber = '+91$phone';
+      print('Updating phone number to $fullPhoneNumber');
       viewModel.updatePhoneNumber(fullPhoneNumber);
 
       setState(() {

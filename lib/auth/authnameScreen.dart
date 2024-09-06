@@ -20,7 +20,7 @@ class _AuthNameScreenState extends State<AuthNameScreen> {
   String? _errorText; // Track the error message
 
   void _validateAndProceed() {
-    final firstName = _lastName.text;
+    final firstName = _firstName.text;
     final lastName = _lastName.text;
 
     if (firstName.isEmpty) {

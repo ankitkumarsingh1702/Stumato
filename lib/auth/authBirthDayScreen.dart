@@ -59,8 +59,7 @@ class _BirthDateScreenState extends State<BirthDateScreen> {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) =>
-                  SignOutScreen(), // Replace with your next screen
+              builder: (context) => WebAct(), // Replace with your next screen
             ),
           );
           setState(() {

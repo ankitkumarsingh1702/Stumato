@@ -42,17 +42,14 @@ class Authviewmodel extends ChangeNotifier {
       isLoading = true;
       notifyListeners();
 
-      // Start the Google Sign-In process
       final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
       if (googleUser == null) {
-        // The user canceled the sign-in process
         print("Google Sign-In was canceled by the user.");
         isLoading = false;
         notifyListeners();
         return;
       }
 
-      // Authenticate with Google
       final GoogleSignInAuthentication googleAuth =
           await googleUser.authentication;
       final AuthCredential credential = GoogleAuthProvider.credential(
@@ -60,24 +57,21 @@ class Authviewmodel extends ChangeNotifier {
         idToken: googleAuth.idToken,
       );
 
-      // Sign in to Firebase using the Google credentials
       final UserCredential userCredential =
           await _auth.signInWithCredential(credential);
       final User? user = userCredential.user;
 
-      // Check if the user is successfully authenticated
       if (user != null) {
         _userId = user.uid;
         _emailAddress = user.email ?? '';
         _phoneNumber = user.phoneNumber ?? '';
         print("phone number is " + _phoneNumber);
-        _createUserInFirestore();
+        await _createUserInFirestore(); // Ensure this is awaited
         print('User signed in successfully with email: ${user.email}');
 
         isLoading = false;
         notifyListeners();
 
-        // Navigate to the next screen after successful sign-in
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => const BirthDateScreen()),
@@ -96,13 +90,8 @@ class Authviewmodel extends ChangeNotifier {
 
   Future<void> signOut() async {
     try {
-      // Sign out from Firebase Auth
       await _auth.signOut();
-
-      // Sign out from Google
       await _googleSignIn.signOut();
-
-      // Clear user data after signing out
       _userId = null;
       _firstName = '';
       _lastName = '';
@@ -110,13 +99,12 @@ class Authviewmodel extends ChangeNotifier {
       _phoneNumber = '';
       _birthday = null;
 
-      notifyListeners(); // Notify listeners to update any UI that depends on user data
+      notifyListeners();
     } catch (e) {
       print('Error during sign out: $e');
     }
   }
 
-  // Fetch user data from Firestore
   Future<void> fetchUserDataFromFirestore() async {
     if (_userId == null) return;
 
@@ -130,6 +118,12 @@ class Authviewmodel extends ChangeNotifier {
         _emailAddress = userDoc['emailAddress'] ?? '';
         _phoneNumber = userDoc['phoneNumber'] ?? '';
         _birthday = (userDoc['birthday'] as Timestamp?)?.toDate();
+
+        print('Fetched user data:');
+        print('First Name: $_firstName');
+        print('Last Name: $_lastName');
+        print('Phone Number: $_phoneNumber');
+
         notifyListeners();
       } else {
         print('No user document found in Firestore.');
@@ -153,7 +147,7 @@ class Authviewmodel extends ChangeNotifier {
         'emailAddress': _emailAddress.isNotEmpty ? _emailAddress : null,
         'phoneNumber': _phoneNumber.isNotEmpty ? _phoneNumber : null,
         'birthday': _birthday != null ? _birthday : null,
-      }, SetOptions(merge: true));
+      }, SetOptions(merge: true)); // Merge to update fields without overwriting
 
       print("User created successfully in Firestore");
       notifyListeners();
@@ -162,7 +156,6 @@ class Authviewmodel extends ChangeNotifier {
     }
   }
 
-  // Update Firestore with user data
   Future<void> updateUserInFirestore() async {
     if (_userId == null) return;
 
@@ -174,13 +167,13 @@ class Authviewmodel extends ChangeNotifier {
         'phoneNumber': _phoneNumber,
         'birthday': _birthday,
       });
+      print('User data updated successfully');
       notifyListeners();
     } catch (e) {
       print('Error updating user in Firestore: $e');
     }
   }
 
-  // Update methods for individual fields
   void updateFirstName(String firstName) {
     _firstName = firstName;
     updateUserInFirestore();
