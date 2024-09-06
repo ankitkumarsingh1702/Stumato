@@ -39,9 +39,6 @@ class _AuthPhoneScreenState extends State<AuthPhoneScreen> {
         _errorText = null;
       });
 
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('OTP sent successfully!')),
-      );
       Navigator.push(
         context,
         MaterialPageRoute(

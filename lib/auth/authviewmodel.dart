@@ -37,19 +37,22 @@ class Authviewmodel extends ChangeNotifier {
     }
   }
 
-  // Sign in with Google
   Future<void> signInWithGoogle(BuildContext context) async {
     try {
       isLoading = true;
       notifyListeners();
 
+      // Start the Google Sign-In process
       final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
       if (googleUser == null) {
+        // The user canceled the sign-in process
+        print("Google Sign-In was canceled by the user.");
         isLoading = false;
         notifyListeners();
         return;
       }
 
+      // Authenticate with Google
       final GoogleSignInAuthentication googleAuth =
           await googleUser.authentication;
       final AuthCredential credential = GoogleAuthProvider.credential(
@@ -57,25 +60,59 @@ class Authviewmodel extends ChangeNotifier {
         idToken: googleAuth.idToken,
       );
 
+      // Sign in to Firebase using the Google credentials
       final UserCredential userCredential =
           await _auth.signInWithCredential(credential);
       final User? user = userCredential.user;
 
+      // Check if the user is successfully authenticated
       if (user != null) {
         _userId = user.uid;
         _emailAddress = user.email ?? '';
         _phoneNumber = user.phoneNumber ?? '';
-        await _createUserInFirestore(); // Create or update user in Firestore
+        print("phone number is " + _phoneNumber);
+        _createUserInFirestore();
+        print('User signed in successfully with email: ${user.email}');
+
         isLoading = false;
         notifyListeners();
 
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => const BirthDateScreen()));
+        // Navigate to the next screen after successful sign-in
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => const BirthDateScreen()),
+        );
+      } else {
+        print("Error: User is null after sign-in.");
+        isLoading = false;
+        notifyListeners();
       }
     } catch (e) {
       print("Error in Google Sign-In: $e");
       isLoading = false;
       notifyListeners();
+    }
+  }
+
+  Future<void> signOut() async {
+    try {
+      // Sign out from Firebase Auth
+      await _auth.signOut();
+
+      // Sign out from Google
+      await _googleSignIn.signOut();
+
+      // Clear user data after signing out
+      _userId = null;
+      _firstName = '';
+      _lastName = '';
+      _emailAddress = '';
+      _phoneNumber = '';
+      _birthday = null;
+
+      notifyListeners(); // Notify listeners to update any UI that depends on user data
+    } catch (e) {
+      print('Error during sign out: $e');
     }
   }
 
@@ -102,19 +139,23 @@ class Authviewmodel extends ChangeNotifier {
     }
   }
 
-  // Create or update user in Firestore
   Future<void> _createUserInFirestore() async {
-    if (_userId == null) return;
+    if (_userId == null) {
+      print("Error: User ID is null, cannot create user.");
+      return;
+    }
 
     try {
+      print("Creating user in Firestore for user ID: $_userId");
       await _firestore.collection('users').doc(_userId).set({
         'firstName': _firstName.isNotEmpty ? _firstName : null,
         'lastName': _lastName.isNotEmpty ? _lastName : null,
         'emailAddress': _emailAddress.isNotEmpty ? _emailAddress : null,
         'phoneNumber': _phoneNumber.isNotEmpty ? _phoneNumber : null,
         'birthday': _birthday != null ? _birthday : null,
-      }, SetOptions(merge: true)); // Merges with existing data if any
+      }, SetOptions(merge: true));
 
+      print("User created successfully in Firestore");
       notifyListeners();
     } catch (e) {
       print('Error creating/updating user in Firestore: $e');

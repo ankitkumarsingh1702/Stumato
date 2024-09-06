@@ -4,6 +4,7 @@ import 'package:hushh_for_students_ios/MainAct/webact.dart';
 import 'package:hushh_for_students_ios/auth/authviewmodel.dart';
 import 'package:hushh_for_students_ios/components/customButton.dart';
 import 'package:hushh_for_students_ios/onboarding/components/customProgressIndicator.dart';
+import 'package:hushh_for_students_ios/signout.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
@@ -59,7 +60,7 @@ class _BirthDateScreenState extends State<BirthDateScreen> {
             context,
             MaterialPageRoute(
               builder: (context) =>
-                  const WebAct(), // Replace with your next screen
+                  SignOutScreen(), // Replace with your next screen
             ),
           );
           setState(() {

@@ -1,10 +1,12 @@
+// ignore_for_file: avoid_print
+
 import 'package:flutter/material.dart';
-import 'package:firebase_core/firebase_core.dart'; // Import Firebase Core
-import 'package:hushh_for_students_ios/MainAct/webact.dart'; // Correct path for webact.dart
+import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:hushh_for_students_ios/auth/authviewmodel.dart';
 import 'package:hushh_for_students_ios/firebase_options.dart';
 import 'package:hushh_for_students_ios/onboarding/onBoardingScreen.dart';
+import 'package:hushh_for_students_ios/signout.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
@@ -12,9 +14,14 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
   runApp(
     MultiProvider(
-      providers: [ChangeNotifierProvider(create: (context) => Authviewmodel())],
+      providers: [
+        ChangeNotifierProvider(
+          create: (context) => Authviewmodel(),
+        ),
+      ],
       child: MyApp(),
     ),
   );
@@ -28,11 +35,10 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: InitializerWidget(), // Set InitializerWidget as the home
+      home: InitializerWidget(),
       routes: {
-        '/home': (context) => WebAct(), // Define your home screen route
-        '/onboarding': (context) =>
-            const OnboardingScreen(), // Define your onboarding screen route
+        '/home': (context) => SignOutScreen(),
+        '/onboarding': (context) => const OnboardingScreen(),
       },
     );
   }

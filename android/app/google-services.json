@@ -211,6 +211,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "621906786515-gia9gtsu7gsiuobqa7pl3rkuul0htfs2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.hushh_for_students_ios",
+            "certificate_hash": "74d76e0a19d06dd145a006ce067ecf2c8c606a24"
+          }
+        },
+        {
           "client_id": "621906786515-6agfe0rtojgm3gh4g7fucn7jma9amue6.apps.googleusercontent.com",
           "client_type": 3
         }
