@@ -17,14 +17,34 @@ dependencies:
   cloud_firestore: ^5.4.0
   package_info_plus: ^8.0.2
   fluttertoast: ^8.2.8
+  google_fonts: ^6.2.1
+  tutorial_coach_mark: ^1.2.11
+  showcaseview: ^3.0.0
+  app_tutorial: ^1.0.6
+  another_flushbar: ^1.12.30
+
+
 
 dev_dependencies:
+  flutter_launcher_icons: ^0.13.1
   flutter_test:
     sdk: flutter
   flutter_lints: ^4.0.0
+
+flutter_icons:
+  image_path: "lib/assets/app_logo.png"
+  android: true
+  ios: true
+
+
+
+
+
 
 flutter:
   uses-material-design: true
   assets:
     - lib/assets/oac.jpg
     - lib/assets/thapa.jpg
+    - lib/assets/app_logo.png
+    - lib/assets/amzon_vc_quiz.jpg

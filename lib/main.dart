@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_core/firebase_core.dart'; // Import Firebase Core
-import 'package:hushh_for_students_ios/MainAct/webact.dart';  // Correct path for webact.dart
+import 'package:firebase_core/firebase_core.dart';
+import 'package:hushh_for_students_ios/MainAct/webact.dart';
+import 'package:app_tutorial/app_tutorial.dart'; // Import app_tutorial
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized(); // Ensure widgets are initialized
-  await Firebase.initializeApp(); // Initialize Firebase
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
 
   runApp(const MyApp());
 }
@@ -15,13 +16,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Hushh for Students', // hfs
+      title: 'Hushh for Students',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
       home: const WebAct(),
-      debugShowCheckedModeBanner: false, // This removes the debug banner
+      debugShowCheckedModeBanner: false,
     );
   }
 }

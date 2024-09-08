@@ -2,27 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:another_flushbar/flushbar.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:hushh_for_students_ios/MiniStore/hfsministore.dart';
-
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
-
-  runApp(const WebAct());
-}
+import 'package:hushh_for_students_ios/MainAct/DataStoreUrl.dart';
+import 'package:app_tutorial/app_tutorial.dart';
 
 class WebAct extends StatelessWidget {
   const WebAct({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Hushh for Students',
-      home: const HomeScreen(),
-      debugShowCheckedModeBanner: false,
-    );
+    return const HomeScreen();
   }
 }
 
@@ -34,62 +25,45 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final DataStoreUrl dataStoreUrl = DataStoreUrl();
+  GlobalKey _oacButtonKey = GlobalKey();
+  late List<TutorialItem> tutorialItems;
+
   @override
   void initState() {
     super.initState();
     _checkVersionAndUpdate();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _setupTutorial();
+      _startTutorial();
+    });
   }
 
   Future<void> _checkVersionAndUpdate() async {
-    // Fetch the installed version
     final PackageInfo packageInfo = await PackageInfo.fromPlatform();
     String installedVersion = packageInfo.buildNumber;
-    Fluttertoast.showToast(
-      msg: 'Installed Version Code: $installedVersion',
-      toastLength: Toast.LENGTH_SHORT,
-      gravity: ToastGravity.BOTTOM,
-    );
 
-    // Retrieve the version code from Firestore
+    _showFlushBar(context, 'Installed Version Code: $installedVersion');
+
     final FirebaseFirestore firestore = FirebaseFirestore.instance;
     final DocumentReference versionUpdateRef = firestore.collection('version_update_ios').doc('versionCodehfs');
 
     versionUpdateRef.snapshots().listen((DocumentSnapshot snapshot) {
       if (snapshot.exists) {
         String firestoreVersionCode = snapshot.get('versionCode') ?? '';
-        Fluttertoast.showToast(
-          msg: 'Firestore Version Code Retrieved: $firestoreVersionCode',
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-        );
+        _showFlushBar(context, 'Firestore Version Code: $firestoreVersionCode');
 
         if (firestoreVersionCode != installedVersion) {
-          Fluttertoast.showToast(
-            msg: 'Version mismatch: Updating app...',
-            toastLength: Toast.LENGTH_SHORT,
-            gravity: ToastGravity.BOTTOM,
-          );
+          _showFlushBar(context, 'Version mismatch: Updating app...');
           _retrieveUpdateLink();
         } else {
-          Fluttertoast.showToast(
-            msg: 'App is up-to-date.',
-            toastLength: Toast.LENGTH_SHORT,
-            gravity: ToastGravity.BOTTOM,
-          );
+          debugPrint('App is up-to-date.');
         }
       } else {
-        Fluttertoast.showToast(
-          msg: 'No version info found in Firestore.',
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-        );
+        _showFlushBar(context, 'No version info found in Firestore.');
       }
     }, onError: (error) {
-      Fluttertoast.showToast(
-        msg: 'Error fetching Firestore version: $error',
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.BOTTOM,
-      );
+      _showFlushBar(context, 'Error fetching Firestore version: $error');
     });
   }
 
@@ -102,44 +76,91 @@ class _HomeScreenState extends State<HomeScreen> {
         String? updateLink = documentSnapshot.get('link');
         _openUpdateLink(updateLink);
       } else {
-        Fluttertoast.showToast(
-          msg: 'Update link document does not exist.',
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-        );
+        _showFlushBar(context, 'Update link document does not exist.');
       }
     }).catchError((error) {
-      Fluttertoast.showToast(
-        msg: 'Failed to retrieve update link: $error',
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.BOTTOM,
-      );
+      _showFlushBar(context, 'Failed to retrieve update link: $error');
     });
   }
 
   Future<void> _openUpdateLink(String? link) async {
     if (link != null && link.isNotEmpty) {
-      Fluttertoast.showToast(
-        msg: 'Opening update link: $link',
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.BOTTOM,
-      );
+      _showFlushBar(context, 'Opening update link: $link');
       if (await canLaunch(link)) {
         await launch(link);
       } else {
-        Fluttertoast.showToast(
-          msg: 'Could not launch $link',
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-        );
+        _showFlushBar(context, 'Could not launch $link');
       }
     } else {
-      Fluttertoast.showToast(
-        msg: 'Update link is empty or null.',
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.BOTTOM,
-      );
+      _showFlushBar(context, 'Update link is empty or null.');
     }
+  }
+
+  void _setupTutorial() {
+    tutorialItems = [
+      TutorialItem(
+        globalKey: _oacButtonKey,
+        color: Colors.black.withOpacity(0.5),
+        radius: 8.0,
+        child: Positioned(
+          bottom: -40,
+          left: 0,
+          right: 0,
+          child: Column(
+            children: [
+              Text(
+                'Click on Buy Now to place your order',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    ];
+  }
+
+  void _startTutorial() {
+    Future.delayed(const Duration(milliseconds: 500), () {
+      _showCustomDurationFlushBar(context, 'Click on Buy Now to place your order', Duration(seconds: 8));
+    });
+
+    Tutorial.showTutorial(context, tutorialItems, onTutorialComplete: () {
+      _showFlushBar(context, 'Tutorial complete!');
+    });
+  }
+
+  void _showCustomDurationFlushBar(BuildContext context, String message, Duration duration) {
+    Flushbar(
+      messageText: Row(
+        children: [
+          Icon(Icons.info, color: Colors.black),
+          SizedBox(width: 12),
+          Expanded(
+            child: Text(
+              message,
+              style: TextStyle(color: Colors.black),
+            ),
+          ),
+        ],
+      ),
+      duration: duration,
+      backgroundColor: Colors.white,
+      borderRadius: BorderRadius.circular(8),
+      margin: EdgeInsets.all(8),
+      padding: EdgeInsets.all(16),
+    ).show(context);
+  }
+
+  void _showLongFlushBar(BuildContext context) {
+    _showCustomDurationFlushBar(context, 'Click on Buy Now to place your order', Duration(seconds: 2));
+  }
+
+  void _showFlushBar(BuildContext context, String message) {
+    _showCustomDurationFlushBar(context, message, Duration(seconds: 1));
   }
 
   @override
@@ -194,28 +215,32 @@ class _HomeScreenState extends State<HomeScreen> {
                   mainAxisSpacing: 10.0,
                   childAspectRatio: 2 / 2.5,
                 ),
-                itemCount: 2,
+                itemCount: 3, // updated to 3 to include the new card
                 itemBuilder: (context, index) {
-                  // Define the images and titles for each card
                   List<String> images = [
                     'lib/assets/oac.jpg',
                     'lib/assets/thapa.jpg',
+                    'lib/assets/amzon_vc_quiz.jpg', // new image
                   ];
 
                   List<String> titles = [
                     'OAC Canteen',
                     'Thapa Mess',
+                    'Quizizz', // new title
                   ];
 
                   List<String> subtitles = [
                     'Cafeteria, Culinary and Food',
                     'Cafeteria, Culinary and Food',
+                    'Play quiz, win ₹100 voucher',
                   ];
 
                   return ProductCard(
+                    key: index == 0 ? _oacButtonKey : null,
                     imagePath: images[index],
                     title: titles[index],
                     subtitle: subtitles[index],
+                    dataStoreUrl: dataStoreUrl,
                   );
                 },
               ),
@@ -231,8 +256,15 @@ class ProductCard extends StatelessWidget {
   final String imagePath;
   final String title;
   final String subtitle;
+  final DataStoreUrl dataStoreUrl;
 
-  const ProductCard({required this.imagePath, required this.title, required this.subtitle, Key? key}) : super(key: key);
+  const ProductCard({
+    required this.imagePath,
+    required this.title,
+    required this.subtitle,
+    required this.dataStoreUrl,
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -240,15 +272,31 @@ class ProductCard extends StatelessWidget {
       borderRadius: BorderRadius.circular(10),
       child: Stack(
         children: [
+          Image.asset(
+            imagePath,
+            fit: BoxFit.cover,
+            height: 120, // Adjust height as needed
+            width: double.infinity,
+          ),
           Positioned.fill(
-            child: Image.asset(
-              imagePath,
-              fit: BoxFit.cover,
+            child: Align(
+              alignment: Alignment.bottomCenter,
+              child: Container(
+                height: 60, // 50% height for gradient
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [Colors.black.withOpacity(0.6), Colors.transparent],
+                    begin: Alignment.bottomCenter,
+                    end: Alignment.topCenter,
+                  ),
+                ),
+              ),
             ),
           ),
           Positioned(
-            bottom: 8.0,
-            left: 8.0,
+            bottom: 10,
+            left: 8,
+            right: 8,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -260,6 +308,7 @@ class ProductCard extends StatelessWidget {
                     color: Colors.white,
                   ),
                 ),
+                const SizedBox(height: 4.0),
                 Text(
                   subtitle,
                   style: const TextStyle(
@@ -269,29 +318,29 @@ class ProductCard extends StatelessWidget {
                 ),
                 const SizedBox(height: 4.0),
                 ElevatedButton(
-                  onPressed: () {
-                    // Navigate based on store title
-                    if (title.toLowerCase().contains('oac')) {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => HfsMiniStoreScreen(storeName: 'OAC', url: 'https://hushh-for-students-store-vone.mini.site'),
+                  onPressed: () async {
+                    String storeUrl = await dataStoreUrl.getStoreUrl(
+                        title.toLowerCase().contains('oac')
+                            ? 'OAC'
+                            : title.toLowerCase().contains('thapa')
+                            ? 'Thapa'
+                            : 'quizizz' // Exact store name for "Quizizz"
+                    );
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => HfsMiniStoreScreen(
+                          storeName: title,
+                          url: storeUrl,
                         ),
-                      );
-                    } else if (title.toLowerCase().contains('thapa')) {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => HfsMiniStoreScreen(storeName: 'Thapa', url: 'https://hushh-for-students.mini.store'),
-                        ),
-                      );
-                    }
+                      ),
+                    );
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.black,
                     foregroundColor: Colors.white,
                   ),
-                  child: const Text('Buy Now'),
+                  child: Text(title.toLowerCase().contains('quizizz') ? 'Play Now' : 'Buy Now'),
                 ),
               ],
             ),
