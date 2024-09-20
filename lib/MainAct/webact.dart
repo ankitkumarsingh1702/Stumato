@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-<<<<<<< HEAD
+
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -13,7 +13,7 @@ import 'package:app_tutorial/app_tutorial.dart';
 
 import 'package:hushh_for_students_ios/MiniStore/hfsministore.dart';
 
-=======
+
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -26,22 +26,22 @@ void main() async {
 
   runApp(const WebAct());
 }
->>>>>>> 84ab20b10485b155bd0724e12a758ef94078a661
+
 
 class WebAct extends StatelessWidget {
   const WebAct({super.key});
 
   @override
   Widget build(BuildContext context) {
-<<<<<<< HEAD
+
     return const HomeScreen();
-=======
+
     return MaterialApp(
       title: 'Hushh for Students',
       home: const HomeScreen(),
       debugShowCheckedModeBanner: false, // This removes the debug banner
     );
->>>>>>> 84ab20b10485b155bd0724e12a758ef94078a661
+
   }
 }
 
@@ -53,7 +53,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-<<<<<<< HEAD
+
   final DataStoreUrl dataStoreUrl = DataStoreUrl();
   GlobalKey _oacButtonKey = GlobalKey();
   late List<TutorialItem> tutorialItems;
@@ -75,7 +75,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
     _showFlushBar(context, 'Installed Version Code: $installedVersion');
 
-=======
   @override
   void initState() {
     super.initState();
@@ -93,14 +92,14 @@ class _HomeScreenState extends State<HomeScreen> {
     );
 
     // Fetch the version code from Firestore
->>>>>>> 84ab20b10485b155bd0724e12a758ef94078a661
+
     final FirebaseFirestore firestore = FirebaseFirestore.instance;
     final DocumentReference versionUpdateRef = firestore.collection('version_update_ios').doc('versionCodehfs');
 
     versionUpdateRef.snapshots().listen((DocumentSnapshot snapshot) {
       if (snapshot.exists) {
         String firestoreVersionCode = snapshot.get('versionCode') ?? '';
-<<<<<<< HEAD
+
         _showFlushBar(context, 'Firestore Version Code: $firestoreVersionCode');
 
         if (firestoreVersionCode != installedVersion) {
@@ -114,7 +113,7 @@ class _HomeScreenState extends State<HomeScreen> {
       }
     }, onError: (error) {
       _showFlushBar(context, 'Error fetching Firestore version: $error');
-=======
+
         Fluttertoast.showToast(
           msg: 'Firestore Version Code Retrieved: $firestoreVersionCode',
           toastLength: Toast.LENGTH_SHORT,
@@ -148,7 +147,7 @@ class _HomeScreenState extends State<HomeScreen> {
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.BOTTOM,
       );
->>>>>>> 84ab20b10485b155bd0724e12a758ef94078a661
+
     });
   }
 
@@ -161,12 +160,12 @@ class _HomeScreenState extends State<HomeScreen> {
         String? updateLink = documentSnapshot.get('link');
         _openUpdateLink(updateLink);
       } else {
-<<<<<<< HEAD
+
         _showFlushBar(context, 'Update link document does not exist.');
       }
     }).catchError((error) {
       _showFlushBar(context, 'Failed to retrieve update link: $error');
-=======
+
         Fluttertoast.showToast(
           msg: 'Update link document does not exist.',
           toastLength: Toast.LENGTH_SHORT,
@@ -179,13 +178,13 @@ class _HomeScreenState extends State<HomeScreen> {
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.BOTTOM,
       );
->>>>>>> 84ab20b10485b155bd0724e12a758ef94078a661
+
     });
   }
 
   Future<void> _openUpdateLink(String? link) async {
     if (link != null && link.isNotEmpty) {
-<<<<<<< HEAD
+
       _showFlushBar(context, 'Opening update link: $link');
       if (await canLaunch(link)) {
         await launch(link);
