@@ -226,7 +226,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   List<String> titles = [
                     'OAC Canteen',
                     'Thapa Mess',
-                    'Quizizz', // new title
+                    'Hushh Quiz', // replaced title
                   ];
 
                   List<String> subtitles = [
@@ -324,7 +324,7 @@ class ProductCard extends StatelessWidget {
                             ? 'OAC'
                             : title.toLowerCase().contains('thapa')
                             ? 'Thapa'
-                            : 'quizizz' // Exact store name for "Quizizz"
+                            : 'hushh_quiz' // updated store name
                     );
                     Navigator.push(
                       context,
@@ -337,10 +337,36 @@ class ProductCard extends StatelessWidget {
                     );
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.black,
-                    foregroundColor: Colors.white,
+                    padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20), // Padding for button
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12), // Rounded corners for button
+                    ),
+                    elevation: 10, // Shadow effect for a 3D feel
+                    shadowColor: Colors.black.withOpacity(0.3), // Shadow color
+                    backgroundColor: Colors.transparent, // To apply gradient
+                  ).copyWith(
+                    foregroundColor: MaterialStateProperty.all(Colors.white), // Text color
                   ),
-                  child: Text(title.toLowerCase().contains('quizizz') ? 'Play Now' : 'Buy Now'),
+                  child: Ink(
+                    decoration: BoxDecoration(
+                      gradient: const LinearGradient(
+                        colors: [Colors.white, Colors.black], // White and Black gradient
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                      ),
+                      borderRadius: BorderRadius.circular(12), // Same rounded corners as the button
+                    ),
+                    child: Container(
+                      alignment: Alignment.center,
+                      child: Text(
+                        title.toLowerCase().contains('hushh_quiz') ? 'Play Now' : 'Buy Now',
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                        ),
+                      ),
+                    ),
+                  ),
                 ),
               ],
             ),
