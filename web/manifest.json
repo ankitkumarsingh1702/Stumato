@@ -1,6 +1,11 @@
 {
+<<<<<<< HEAD
     "name": "hushh_for_students_ios",
     "short_name": "hushh_for_students_ios",
+=======
+    "name": "hfs_flutter",
+    "short_name": "hfs_flutter",
+>>>>>>> 84ab20b10485b155bd0724e12a758ef94078a661
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

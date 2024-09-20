@@ -204,6 +204,7 @@
     },
     {
       "client_info": {
+<<<<<<< HEAD
         "mobilesdk_app_id": "1:621906786515:android:ed3f2107b13e16482dbc26",
         "android_client_info": {
           "package_name": "com.example.hushh_for_students_ios"
@@ -264,6 +265,8 @@
     },
     {
       "client_info": {
+=======
+>>>>>>> 84ab20b10485b155bd0724e12a758ef94078a661
         "mobilesdk_app_id": "1:621906786515:android:e3d145a0908eeef92dbc26",
         "android_client_info": {
           "package_name": "com.example.project_gemini"

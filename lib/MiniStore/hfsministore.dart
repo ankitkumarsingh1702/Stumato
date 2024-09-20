@@ -78,4 +78,8 @@ class HfsMiniStoreScreen extends StatelessWidget {
       body: WebViewWidget(controller: _controller), // Display the WebView in full screen
     );
   }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 84ab20b10485b155bd0724e12a758ef94078a661

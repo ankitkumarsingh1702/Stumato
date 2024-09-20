@@ -1,30 +1,53 @@
 import 'package:flutter/material.dart';
+<<<<<<< HEAD
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:firebase_core/firebase_core.dart'; // Import Firebase Core
 import 'package:hushh_for_students/MiniStore/hfsministore.dart'; // Import the hfsministore.dart file
+=======
+import 'package:firebase_core/firebase_core.dart'; // Import Firebase Core
+import 'package:hushh_for_students/MainAct/webact.dart';  // Correct path for webact.dart
+>>>>>>> 84ab20b10485b155bd0724e12a758ef94078a661
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized(); // Ensure widgets are initialized
   await Firebase.initializeApp(); // Initialize Firebase
 
+<<<<<<< HEAD
   runApp(const WebAct());
 }
 
 class WebAct extends StatelessWidget {
   const WebAct({super.key});
+=======
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+>>>>>>> 84ab20b10485b155bd0724e12a758ef94078a661
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+<<<<<<< HEAD
       title: 'Hushh for Students',
       home: const HomeScreen(),
+=======
+      title: 'Hushh for Students', // hfs
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        useMaterial3: true,
+      ),
+      home: const WebAct(),
+>>>>>>> 84ab20b10485b155bd0724e12a758ef94078a661
       debugShowCheckedModeBanner: false, // This removes the debug banner
     );
   }
 }
+<<<<<<< HEAD
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -298,3 +321,5 @@ class ProductCard extends StatelessWidget {
     );
   }
 }
+=======
+>>>>>>> 84ab20b10485b155bd0724e12a758ef94078a661

@@ -1,8 +1,16 @@
+<<<<<<< HEAD
 name: hushh_for_students_ios
 description: "A new Flutter project."
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
 version: 1.26.0+26
+=======
+name: hushh_for_students # Use underscores instead of spaces
+description: "A new Flutter project."
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+version: 1.25.0+25
+>>>>>>> 84ab20b10485b155bd0724e12a758ef94078a661
 
 environment:
   sdk: ^3.5.1
@@ -14,6 +22,7 @@ dependencies:
   webview_flutter: ^4.9.0
   url_launcher: ^6.3.0
   firebase_core: ^3.4.0
+<<<<<<< HEAD
   package_info_plus: ^8.0.2
   fluttertoast: ^8.2.8
 
@@ -40,10 +49,18 @@ dependencies:
 
 dev_dependencies:
   flutter_launcher_icons: ^0.13.1
+=======
+  cloud_firestore: ^5.4.0
+  package_info_plus: ^8.0.2
+  fluttertoast: ^8.2.8
+
+dev_dependencies:
+>>>>>>> 84ab20b10485b155bd0724e12a758ef94078a661
   flutter_test:
     sdk: flutter
   flutter_lints: ^4.0.0
 
+<<<<<<< HEAD
 flutter_icons:
   image_path: "lib/assets/app_logo.png"
   android: true
@@ -54,11 +71,14 @@ flutter_icons:
 
 
 
+=======
+>>>>>>> 84ab20b10485b155bd0724e12a758ef94078a661
 flutter:
   uses-material-design: true
   assets:
     - lib/assets/oac.jpg
     - lib/assets/thapa.jpg
+<<<<<<< HEAD
 
     - lib/assets/app_logo.png
     - lib/assets/amzon_vc_quiz.jpg
@@ -70,3 +90,5 @@ flutter:
     - lib/assets/profile_nav.png
     - lib/assets/Frame.png
     - lib/assets/aitlogoo.png
+=======
+>>>>>>> 84ab20b10485b155bd0724e12a758ef94078a661

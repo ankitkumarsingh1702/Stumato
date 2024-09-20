@@ -15,7 +15,11 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "33CC10EC2044A3C60003C045"
+<<<<<<< HEAD
                BuildableName = "hushh_for_students_ios.app"
+=======
+               BuildableName = "hfs_flutter.app"
+>>>>>>> 84ab20b10485b155bd0724e12a758ef94078a661
                BlueprintName = "Runner"
                ReferencedContainer = "container:Runner.xcodeproj">
             </BuildableReference>
@@ -31,7 +35,11 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "33CC10EC2044A3C60003C045"
+<<<<<<< HEAD
             BuildableName = "hushh_for_students_ios.app"
+=======
+            BuildableName = "hfs_flutter.app"
+>>>>>>> 84ab20b10485b155bd0724e12a758ef94078a661
             BlueprintName = "Runner"
             ReferencedContainer = "container:Runner.xcodeproj">
          </BuildableReference>
@@ -65,7 +73,11 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "33CC10EC2044A3C60003C045"
+<<<<<<< HEAD
             BuildableName = "hushh_for_students_ios.app"
+=======
+            BuildableName = "hfs_flutter.app"
+>>>>>>> 84ab20b10485b155bd0724e12a758ef94078a661
             BlueprintName = "Runner"
             ReferencedContainer = "container:Runner.xcodeproj">
          </BuildableReference>
@@ -82,7 +94,11 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "33CC10EC2044A3C60003C045"
+<<<<<<< HEAD
             BuildableName = "hushh_for_students_ios.app"
+=======
+            BuildableName = "hfs_flutter.app"
+>>>>>>> 84ab20b10485b155bd0724e12a758ef94078a661
             BlueprintName = "Runner"
             ReferencedContainer = "container:Runner.xcodeproj">
          </BuildableReference>

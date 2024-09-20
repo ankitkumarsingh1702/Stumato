@@ -6,11 +6,20 @@
 
 
     <application
+<<<<<<< HEAD
         android:label="hushh_for_students_ios"
+=======
+        android:label="hushh_for_students"
+>>>>>>> 84ab20b10485b155bd0724e12a758ef94078a661
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
 
 
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 84ab20b10485b155bd0724e12a758ef94078a661
         <activity
             android:name=".MainActivity"
             android:exported="true"

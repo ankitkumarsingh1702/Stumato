@@ -25,9 +25,21 @@ class DefaultFirebaseOptions {
       case TargetPlatform.iOS:
         return ios;
       case TargetPlatform.macOS:
+<<<<<<< HEAD
         return macos;
       case TargetPlatform.windows:
         return windows;
+=======
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for macos - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
+      case TargetPlatform.windows:
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for windows - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
+>>>>>>> 84ab20b10485b155bd0724e12a758ef94078a661
       case TargetPlatform.linux:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for linux - '
@@ -53,7 +65,11 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyCk8QAdNXZRBy4W_2NM7ymNNbFSIaxMG-8',
+<<<<<<< HEAD
     appId: '1:621906786515:android:ed3f2107b13e16482dbc26',
+=======
+    appId: '1:621906786515:android:7aa7279646020f252dbc26',
+>>>>>>> 84ab20b10485b155bd0724e12a758ef94078a661
     messagingSenderId: '621906786515',
     projectId: 'project-gemini-45a06',
     databaseURL: 'https://project-gemini-45a06-default-rtdb.firebaseio.com',
@@ -62,12 +78,17 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyD67XG4zoor-ZpQq2FjljKGdvy4uYY8934',
+<<<<<<< HEAD
     appId: '1:621906786515:ios:c042ae79b5dbbb6e2dbc26',
+=======
+    appId: '1:621906786515:ios:76ac6d671f05af6d2dbc26',
+>>>>>>> 84ab20b10485b155bd0724e12a758ef94078a661
     messagingSenderId: '621906786515',
     projectId: 'project-gemini-45a06',
     databaseURL: 'https://project-gemini-45a06-default-rtdb.firebaseio.com',
     storageBucket: 'project-gemini-45a06.appspot.com',
     androidClientId: '621906786515-3jsp8834bqoru55mlujgdn1ctkr7n25e.apps.googleusercontent.com',
+<<<<<<< HEAD
     iosClientId: '621906786515-a6rnpl15dop3fedohobbj0bs3p42fvhh.apps.googleusercontent.com',
     iosBundleId: 'com.example.hushhForStudentsIos',
   );
@@ -96,3 +117,9 @@ class DefaultFirebaseOptions {
   );
 
 }
+=======
+    iosClientId: '621906786515-6slo7tasho3b10bbrb2ptv173b0v8k3h.apps.googleusercontent.com',
+    iosBundleId: 'com.example.hfsFlutter',
+  );
+}
+>>>>>>> 84ab20b10485b155bd0724e12a758ef94078a661

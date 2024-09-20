@@ -1,10 +1,18 @@
 # Project-level configuration.
 cmake_minimum_required(VERSION 3.14)
+<<<<<<< HEAD
 project(hushh_for_students_ios LANGUAGES CXX)
 
 # The name of the executable created for the application. Change this to change
 # the on-disk name of your application.
 set(BINARY_NAME "hushh_for_students_ios")
+=======
+project(hfs_flutter LANGUAGES CXX)
+
+# The name of the executable created for the application. Change this to change
+# the on-disk name of your application.
+set(BINARY_NAME "hfs_flutter")
+>>>>>>> 84ab20b10485b155bd0724e12a758ef94078a661
 
 # Explicitly opt in to modern CMake behaviors to avoid warnings with recent
 # versions of CMake.

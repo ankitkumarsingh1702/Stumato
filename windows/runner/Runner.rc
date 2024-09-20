@@ -90,12 +90,21 @@ BEGIN
         BLOCK "040904e4"
         BEGIN
             VALUE "CompanyName", "com.example" "\0"
+<<<<<<< HEAD
             VALUE "FileDescription", "hushh_for_students_ios" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
             VALUE "InternalName", "hushh_for_students_ios" "\0"
             VALUE "LegalCopyright", "Copyright (C) 2024 com.example. All rights reserved." "\0"
             VALUE "OriginalFilename", "hushh_for_students_ios.exe" "\0"
             VALUE "ProductName", "hushh_for_students_ios" "\0"
+=======
+            VALUE "FileDescription", "hfs_flutter" "\0"
+            VALUE "FileVersion", VERSION_AS_STRING "\0"
+            VALUE "InternalName", "hfs_flutter" "\0"
+            VALUE "LegalCopyright", "Copyright (C) 2024 com.example. All rights reserved." "\0"
+            VALUE "OriginalFilename", "hfs_flutter.exe" "\0"
+            VALUE "ProductName", "hfs_flutter" "\0"
+>>>>>>> 84ab20b10485b155bd0724e12a758ef94078a661
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END

@@ -4,10 +4,17 @@ project(runner LANGUAGES CXX)
 
 # The name of the executable created for the application. Change this to change
 # the on-disk name of your application.
+<<<<<<< HEAD
 set(BINARY_NAME "hushh_for_students_ios")
 # The unique GTK application identifier for this application. See:
 # https://wiki.gnome.org/HowDoI/ChooseApplicationID
 set(APPLICATION_ID "com.example.hushh_for_students_ios")
+=======
+set(BINARY_NAME "hfs_flutter")
+# The unique GTK application identifier for this application. See:
+# https://wiki.gnome.org/HowDoI/ChooseApplicationID
+set(APPLICATION_ID "com.example.hfs_flutter")
+>>>>>>> 84ab20b10485b155bd0724e12a758ef94078a661
 
 # Explicitly opt in to modern CMake behaviors to avoid warnings with recent
 # versions of CMake.

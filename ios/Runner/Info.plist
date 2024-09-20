@@ -5,7 +5,11 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
+<<<<<<< HEAD
 	<string>Hushh For Students Ios</string>
+=======
+	<string>Hfs Flutter</string>
+>>>>>>> 84ab20b10485b155bd0724e12a758ef94078a661
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -13,7 +17,11 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
+<<<<<<< HEAD
 	<string>hushh_for_students_ios</string>
+=======
+	<string>hfs_flutter</string>
+>>>>>>> 84ab20b10485b155bd0724e12a758ef94078a661
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
@@ -45,6 +53,7 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+<<<<<<< HEAD
 	<key>CFBundleURLTypes</key>
 <array>
     <dict>
@@ -59,5 +68,7 @@
 
 <key>GIDClientID</key>
 <string>621906786515-a6rnpl15dop3fedohobbj0bs3p42fvhh.apps.googleusercontent.com</string>
+=======
+>>>>>>> 84ab20b10485b155bd0724e12a758ef94078a661
 </dict>
 </plist>
