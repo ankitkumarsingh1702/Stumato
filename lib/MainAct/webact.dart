@@ -3,15 +3,15 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
-<<<<<<< HEAD
+
 import 'package:another_flushbar/flushbar.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:hushh_for_students_ios/MiniStore/hfsministore.dart';
 import 'package:hushh_for_students_ios/MainAct/DataStoreUrl.dart';
 import 'package:app_tutorial/app_tutorial.dart';
-=======
+
 import 'package:hushh_for_students_ios/MiniStore/hfsministore.dart';
->>>>>>> 81754bbc8e3a61eac093c526b30c3a4d0007b784
+
 
 class WebAct extends StatelessWidget {
   const WebAct({super.key});
@@ -45,7 +45,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Future<void> _checkVersionAndUpdate() async {
-<<<<<<< HEAD
+
     final PackageInfo packageInfo = await PackageInfo.fromPlatform();
     String installedVersion = packageInfo.buildNumber;
 
@@ -100,7 +100,7 @@ class _HomeScreenState extends State<HomeScreen> {
     } else {
       _showFlushBar(context, 'Update link is empty or null.');
     }
-=======
+
     // Your version check code remains unchanged
   }
 
@@ -110,7 +110,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Future<void> _openUpdateLink(String? link) async {
     // Your URL launcher code remains unchanged
->>>>>>> 81754bbc8e3a61eac093c526b30c3a4d0007b784
+
   }
 
   void _setupTutorial() {
@@ -209,7 +209,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                 ),
-<<<<<<< HEAD
+
                 itemCount: 3, // updated to 3 to include the new card
                 itemBuilder: (context, index) {
                   List<String> images = [
@@ -239,7 +239,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   );
                 },
               ),
-=======
+
                 const Padding(
                   padding: EdgeInsets.symmetric(horizontal: 16.0),
                   child: Row(
@@ -301,7 +301,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
               ],
->>>>>>> 81754bbc8e3a61eac093c526b30c3a4d0007b784
+
             ),
           ),
         ],
@@ -320,10 +320,9 @@ class ProductCard extends StatelessWidget {
     required this.imagePath,
     required this.title,
     required this.subtitle,
-<<<<<<< HEAD
+
     required this.dataStoreUrl,
-=======
->>>>>>> 81754bbc8e3a61eac093c526b30c3a4d0007b784
+
     Key? key,
   }) : super(key: key);
 
@@ -333,16 +332,14 @@ class ProductCard extends StatelessWidget {
       borderRadius: BorderRadius.circular(10),
       child: Stack(
         children: [
-<<<<<<< HEAD
+
           Image.asset(
             imagePath,
             fit: BoxFit.cover,
             height: 120, // Adjust height as needed
             width: double.infinity,
           ),
-=======
-          // Background image
->>>>>>> 81754bbc8e3a61eac093c526b30c3a4d0007b784
+
           Positioned.fill(
             child: Align(
               alignment: Alignment.bottomCenter,
@@ -360,7 +357,7 @@ class ProductCard extends StatelessWidget {
           ),
           // Dark overlay with less opacity at the bottom
           Positioned(
-<<<<<<< HEAD
+
             bottom: 10,
             left: 8,
             right: 8,
@@ -436,7 +433,7 @@ class ProductCard extends StatelessWidget {
                   ),
                 ),
               ],
-=======
+
             bottom: 0,
             left: 0,
             right: 0,
@@ -504,7 +501,7 @@ class ProductCard extends StatelessWidget {
                   ),
                 ],
               ),
->>>>>>> 81754bbc8e3a61eac093c526b30c3a4d0007b784
+
             ),
           ),
         ],

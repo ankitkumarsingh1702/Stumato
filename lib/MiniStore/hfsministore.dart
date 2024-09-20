@@ -2,55 +2,59 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
-/// Displays a mini store using WebView.
 class HfsMiniStoreScreen extends StatelessWidget {
   final String storeName;
-  final String url;
-
   final WebViewController _controller = WebViewController()
     ..setJavaScriptMode(JavaScriptMode.unrestricted)
     ..setNavigationDelegate(
       NavigationDelegate(
         onProgress: (int progress) {
-          // Update progress indicator if needed
+          // Optionally, update a loading bar or progress indicator
         },
-        onPageStarted: (String url) {
-          // Handle actions when a new page starts loading
-        },
+        onPageStarted: (String url) {},
         onPageFinished: (String url) {
-          // Handle actions when a page has finished loading
+          // Here we need to use the context, so we pass it as a parameter later
         },
-        onHttpError: (HttpResponseError error) {
-          // Manage HTTP errors
-        },
-        onWebResourceError: (WebResourceError error) {
-          // Manage loading errors
-        },
+        onHttpError: (HttpResponseError error) {},
+        onWebResourceError: (WebResourceError error) {},
         onNavigationRequest: (NavigationRequest request) async {
           if (request.url.startsWith("http") || request.url.startsWith("https")) {
-            return NavigationDecision.navigate;
+            return NavigationDecision.navigate; // Allow navigation for normal URLs
           } else {
+            // For unknown URL schemes (like UPI payments)
             await _launchExternalApp(request.url);
-            return NavigationDecision.prevent;
+            return NavigationDecision.prevent; // Prevent the WebView from trying to load this URL
           }
         },
       ),
     );
 
-  HfsMiniStoreScreen({required this.storeName, required this.url, Key? key}) : super(key: key) {
-    _controller.loadRequest(Uri.parse(url));
+  HfsMiniStoreScreen({required this.storeName, Key? key}) : super(key: key) {
+    _controller.loadRequest(
+      Uri.parse('https://hushh-for-students-store-vone.mini.site'), // URL to load
+    );
   }
 
-  /// Launch external applications for specific URL schemes.
   static Future<void> _launchExternalApp(String url) async {
     try {
-      if (await canLaunchUrl(Uri.parse(url))) {
+      if (url.startsWith("upi://")) {
+        // Handle UPI URL schemes
+        if (await canLaunchUrl(Uri.parse(url))) {
+          await launchUrl(
+            Uri.parse(url),
+            mode: LaunchMode.externalApplication,
+          );
+        } else {
+          throw 'No UPI app found to handle this request.';
+        }
+      } else if (await canLaunchUrl(Uri.parse(url))) {
+        // Handle normal URLs
         await launchUrl(
           Uri.parse(url),
           mode: LaunchMode.externalApplication,
         );
       } else {
-        throw 'Cannot launch $url';
+        throw 'Could not launch $url';
       }
     } catch (e) {
       print('Error launching URL: $e');
@@ -60,7 +64,7 @@ class HfsMiniStoreScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF1C1C1E),
+      backgroundColor: const Color(0xFF1C1C1E), // Use 'const' to improve performance
       appBar: AppBar(
         backgroundColor: const Color(0xFF1C1C1E),
         title: Text(
@@ -71,7 +75,7 @@ class HfsMiniStoreScreen extends StatelessWidget {
           ),
         ),
       ),
-      body: WebViewWidget(controller: _controller),
+      body: WebViewWidget(controller: _controller), // Display the WebView in full screen
     );
   }
 }
