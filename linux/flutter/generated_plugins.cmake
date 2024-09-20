@@ -3,10 +3,6 @@
 #
 
 list(APPEND FLUTTER_PLUGIN_LIST
-<<<<<<< HEAD
-  gtk
-=======
->>>>>>> 84ab20b10485b155bd0724e12a758ef94078a661
   url_launcher_linux
 )
 

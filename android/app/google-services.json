@@ -204,37 +204,12 @@
     },
     {
       "client_info": {
-<<<<<<< HEAD
         "mobilesdk_app_id": "1:621906786515:android:ed3f2107b13e16482dbc26",
         "android_client_info": {
           "package_name": "com.example.hushh_for_students_ios"
         }
       },
       "oauth_client": [
-        {
-          "client_id": "621906786515-gia9gtsu7gsiuobqa7pl3rkuul0htfs2.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.hushh_for_students_ios",
-            "certificate_hash": "74d76e0a19d06dd145a006ce067ecf2c8c606a24"
-          }
-        },
-        {
-          "client_id": "621906786515-ke5kif0p8ovkpcgi5pqp3hgpujs7khqv.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.hushh_for_students_ios",
-            "certificate_hash": "44eafadcd712409c54560117fa52b154632966a1"
-          }
-        },
-        {
-          "client_id": "621906786515-tb85ekp9cd5utfib4t42l2jap17fv2ij.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.hushh_for_students_ios",
-            "certificate_hash": "9c49576e2e291ab14de4276d9bbb7edb01113b30"
-          }
-        },
         {
           "client_id": "621906786515-6agfe0rtojgm3gh4g7fucn7jma9amue6.apps.googleusercontent.com",
           "client_type": 3
@@ -265,8 +240,6 @@
     },
     {
       "client_info": {
-=======
->>>>>>> 84ab20b10485b155bd0724e12a758ef94078a661
         "mobilesdk_app_id": "1:621906786515:android:e3d145a0908eeef92dbc26",
         "android_client_info": {
           "package_name": "com.example.project_gemini"

@@ -6,20 +6,11 @@
 
 
     <application
-<<<<<<< HEAD
         android:label="hushh_for_students_ios"
-=======
-        android:label="hushh_for_students"
->>>>>>> 84ab20b10485b155bd0724e12a758ef94078a661
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
 
 
-<<<<<<< HEAD
-=======
-
-
->>>>>>> 84ab20b10485b155bd0724e12a758ef94078a661
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -34,9 +25,9 @@
                  while the Flutter UI initializes. After that, this theme continues
                  to determine the Window background behind the Flutter UI. -->
             <meta-data
-              android:name="io.flutter.embedding.android.NormalTheme"
-              android:resource="@style/NormalTheme"
-              />
+                android:name="io.flutter.embedding.android.NormalTheme"
+                android:resource="@style/NormalTheme"
+                />
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
