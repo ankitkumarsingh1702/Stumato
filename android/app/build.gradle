@@ -31,6 +31,7 @@ android {
         jvmTarget = "1.8"
     }
 
+<<<<<<< HEAD
     defaultConfig {
         applicationId = "com.example.hushh_for_students_ios"
         minSdk = flutter.minSdkVersion
@@ -38,6 +39,15 @@ android {
         versionCode = flutter.versionCode
         versionName = flutter.versionName
     }
+=======
+   defaultConfig {
+    applicationId = "com.example.firebasetesting"
+    minSdkVersion 23
+    targetSdkVersion flutter.targetSdkVersion
+    versionCode flutter.versionCode
+    versionName flutter.versionName
+}
+>>>>>>> 81754bbc8e3a61eac093c526b30c3a4d0007b784
 
     buildTypes {
         release {

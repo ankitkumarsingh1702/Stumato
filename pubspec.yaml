@@ -14,9 +14,9 @@ dependencies:
   webview_flutter: ^4.9.0
   url_launcher: ^6.3.0
   firebase_core: ^3.4.0
-  cloud_firestore: ^5.4.0
   package_info_plus: ^8.0.2
   fluttertoast: ^8.2.8
+<<<<<<< HEAD
   google_fonts: ^6.2.1
   tutorial_coach_mark: ^1.2.11
   showcaseview: ^3.0.0
@@ -24,6 +24,19 @@ dependencies:
   another_flushbar: ^1.12.30
 
 
+=======
+  cloud_firestore: ^5.4.0
+  flutter_svg: ^2.0.10+1
+  supabase_flutter: ^2.6.0
+  firebase_auth: ^5.2.0
+  firebase_storage: ^12.2.0
+  shared_preferences: ^2.3.2
+  google_fonts: ^6.2.1
+  provider: ^6.1.2
+  google_sign_in: ^6.2.1
+  date_format: ^2.0.9
+  intl: ^0.19.0 
+>>>>>>> 81754bbc8e3a61eac093c526b30c3a4d0007b784
 
 dev_dependencies:
   flutter_launcher_icons: ^0.13.1
@@ -46,5 +59,15 @@ flutter:
   assets:
     - lib/assets/oac.jpg
     - lib/assets/thapa.jpg
+<<<<<<< HEAD
     - lib/assets/app_logo.png
     - lib/assets/amzon_vc_quiz.jpg
+=======
+    - lib/assets/app_bg.jpeg
+    - lib/assets/hush_logo.svg
+    - lib/assets/explore_nav.png
+    - lib/assets/home_nav.png
+    - lib/assets/profile_nav.png
+    - lib/assets/Frame.png
+    - lib/assets/aitlogoo.png
+>>>>>>> 81754bbc8e3a61eac093c526b30c3a4d0007b784

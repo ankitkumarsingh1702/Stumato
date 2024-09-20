@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
+<<<<<<< HEAD
 import 'package:another_flushbar/flushbar.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:hushh_for_students_ios/MiniStore/hfsministore.dart';
 import 'package:hushh_for_students_ios/MainAct/DataStoreUrl.dart';
 import 'package:app_tutorial/app_tutorial.dart';
+=======
+import 'package:hushh_for_students_ios/MiniStore/hfsministore.dart';
+>>>>>>> 81754bbc8e3a61eac093c526b30c3a4d0007b784
 
 class WebAct extends StatelessWidget {
   const WebAct({super.key});
@@ -40,6 +45,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Future<void> _checkVersionAndUpdate() async {
+<<<<<<< HEAD
     final PackageInfo packageInfo = await PackageInfo.fromPlatform();
     String installedVersion = packageInfo.buildNumber;
 
@@ -94,6 +100,17 @@ class _HomeScreenState extends State<HomeScreen> {
     } else {
       _showFlushBar(context, 'Update link is empty or null.');
     }
+=======
+    // Your version check code remains unchanged
+  }
+
+  Future<void> _retrieveUpdateLink() async {
+    // Your update link retrieval code remains unchanged
+  }
+
+  Future<void> _openUpdateLink(String? link) async {
+    // Your URL launcher code remains unchanged
+>>>>>>> 81754bbc8e3a61eac093c526b30c3a4d0007b784
   }
 
   void _setupTutorial() {
@@ -166,55 +183,33 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF1C1C1E),
-      body: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 20.0),
-              child: Text(
-                'Hushh for Students',
-                style: TextStyle(
-                  fontSize: 28,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                ),
-              ),
+      body: Stack(
+        children: [
+          // Background image
+          Positioned.fill(
+            child: Image.asset(
+              'lib/assets/app_bg.jpeg', // Your background image asset
+              fit: BoxFit.cover,
             ),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'My Products',
+          ),
+          // Foreground content
+          SafeArea(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Padding(
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 16.0, vertical: 20.0),
+                  child: Text(
+                    'Hushh for Students',
                     style: TextStyle(
-                      fontSize: 16,
+                      fontSize: 28,
                       fontWeight: FontWeight.bold,
-                      color: Color(0xFFE8EAEC),
+                      color: Colors.white,
                     ),
                   ),
-                  Text(
-                    'Add new',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      color: Color(0xFFE74C5E),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Expanded(
-              child: GridView.builder(
-                padding: const EdgeInsets.all(16.0),
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 10.0,
-                  mainAxisSpacing: 10.0,
-                  childAspectRatio: 2 / 2.5,
                 ),
+<<<<<<< HEAD
                 itemCount: 3, // updated to 3 to include the new card
                 itemBuilder: (context, index) {
                   List<String> images = [
@@ -244,9 +239,72 @@ class _HomeScreenState extends State<HomeScreen> {
                   );
                 },
               ),
+=======
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 16.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'My Products',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: Color(0xFFE8EAEC),
+                        ),
+                      ),
+                      Text(
+                        'Add new',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: Color(0xFFE74C5E),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Expanded(
+                  child: GridView.builder(
+                    padding: const EdgeInsets.all(16.0),
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      crossAxisSpacing: 10.0,
+                      mainAxisSpacing: 10.0,
+                      childAspectRatio: 2 / 2.5,
+                    ),
+                    itemCount: 2,
+                    itemBuilder: (context, index) {
+                      // Define the images and titles for each card
+                      List<String> images = [
+                        'lib/assets/oac.jpg',
+                        'lib/assets/thapa.jpg',
+                      ];
+
+                      List<String> titles = [
+                        'OAC Canteen',
+                        'Thapa Mess',
+                      ];
+
+                      List<String> subtitles = [
+                        'Cafeteria, Culinary and Food',
+                        'Cafeteria, Culinary and Food',
+                      ];
+
+                      return ProductCard(
+                        imagePath: images[index],
+                        title: titles[index],
+                        subtitle: subtitles[index],
+                      );
+                    },
+                  ),
+                ),
+              ],
+>>>>>>> 81754bbc8e3a61eac093c526b30c3a4d0007b784
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -262,7 +320,10 @@ class ProductCard extends StatelessWidget {
     required this.imagePath,
     required this.title,
     required this.subtitle,
+<<<<<<< HEAD
     required this.dataStoreUrl,
+=======
+>>>>>>> 81754bbc8e3a61eac093c526b30c3a4d0007b784
     Key? key,
   }) : super(key: key);
 
@@ -272,12 +333,16 @@ class ProductCard extends StatelessWidget {
       borderRadius: BorderRadius.circular(10),
       child: Stack(
         children: [
+<<<<<<< HEAD
           Image.asset(
             imagePath,
             fit: BoxFit.cover,
             height: 120, // Adjust height as needed
             width: double.infinity,
           ),
+=======
+          // Background image
+>>>>>>> 81754bbc8e3a61eac093c526b30c3a4d0007b784
           Positioned.fill(
             child: Align(
               alignment: Alignment.bottomCenter,
@@ -293,7 +358,9 @@ class ProductCard extends StatelessWidget {
               ),
             ),
           ),
+          // Dark overlay with less opacity at the bottom
           Positioned(
+<<<<<<< HEAD
             bottom: 10,
             left: 8,
             right: 8,
@@ -369,6 +436,75 @@ class ProductCard extends StatelessWidget {
                   ),
                 ),
               ],
+=======
+            bottom: 0,
+            left: 0,
+            right: 0,
+            child: Container(
+              padding: const EdgeInsets.all(8.0),
+              decoration: BoxDecoration(
+                color: Colors.black
+                    .withOpacity(0.6), // Darkish overlay with opacity
+                borderRadius: const BorderRadius.only(
+                  bottomLeft: Radius.circular(10),
+                  bottomRight: Radius.circular(10),
+                ),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Bright text for title
+                  Text(
+                    title,
+                    style: const TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white, // Bright text color
+                    ),
+                  ),
+                  // Bright text for subtitle
+                  Text(
+                    subtitle,
+                    style: const TextStyle(
+                      fontSize: 12,
+                      color: Colors.white70, // Slightly less bright than title
+                    ),
+                  ),
+                  const SizedBox(height: 6.0),
+                  // Button with lighter background color
+                  ElevatedButton(
+                    onPressed: () {
+                      if (title.toLowerCase().contains('oac')) {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => HfsMiniStoreScreen(
+                                storeName: 'OAC',
+                                url:
+                                    'https://hushh-for-students-store-vone.mini.site'),
+                          ),
+                        );
+                      } else if (title.toLowerCase().contains('thapa')) {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => HfsMiniStoreScreen(
+                                storeName: 'Thapa',
+                                url: 'https://hushh-for-students.mini.store'),
+                          ),
+                        );
+                      }
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.grey[200], // Light button color
+                      foregroundColor: Colors.black, // Dark text for contrast
+                      minimumSize: const Size(100, 30), // Adjust button size
+                    ),
+                    child: Center(child: Text('Buy Now')),
+                  ),
+                ],
+              ),
+>>>>>>> 81754bbc8e3a61eac093c526b30c3a4d0007b784
             ),
           ),
         ],
