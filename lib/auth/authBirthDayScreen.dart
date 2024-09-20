@@ -3,8 +3,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:hushh_for_students_ios/MainAct/webact.dart';
 import 'package:hushh_for_students_ios/auth/authviewmodel.dart';
 import 'package:hushh_for_students_ios/components/customButton.dart';
+import 'package:hushh_for_students_ios/home.dart';
 import 'package:hushh_for_students_ios/onboarding/components/customProgressIndicator.dart';
-import 'package:hushh_for_students_ios/signout.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
@@ -59,7 +59,8 @@ class _BirthDateScreenState extends State<BirthDateScreen> {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => WebAct(), // Replace with your next screen
+              builder: (context) =>
+                  MainScreen(), // Replace with your next screen
             ),
           );
           setState(() {
@@ -107,11 +108,6 @@ class _BirthDateScreenState extends State<BirthDateScreen> {
                         0.4, // Set the current step for the birthdate screen
                   ),
                   const SizedBox(height: 16),
-                  const Icon(
-                    Icons.close,
-                    color: Color(0xff7c8591),
-                    size: 40,
-                  ),
                   const SizedBox(height: 16),
                   Text(
                     'My Date of Birth is',
@@ -129,8 +125,8 @@ class _BirthDateScreenState extends State<BirthDateScreen> {
                       onTap: () => _selectDate(context), // Open date picker
                       child: AbsorbPointer(
                         child: TextField(
-                          controller:
-                              _dateController, // Displays the selected date
+                          controller: _dateController,
+                          style: TextStyle(color: Colors.white),
                           decoration: InputDecoration(
                             hintText: 'Enter your date of birth',
                             errorText: _errorText,

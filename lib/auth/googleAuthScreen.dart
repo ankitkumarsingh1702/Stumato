@@ -41,7 +41,6 @@ class _GoogleAuthScreenState extends State<GoogleAuthScreen> {
               ),
             ),
           ),
-          // Foreground content
           SafeArea(
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: size.width * 0.05),
@@ -53,11 +52,7 @@ class _GoogleAuthScreenState extends State<GoogleAuthScreen> {
                     progress: 0.6, // Adjust the progress value as needed
                   ),
                   const SizedBox(height: 16),
-                  const Icon(
-                    Icons.close,
-                    color: Color(0xff7c8591),
-                    size: 40,
-                  ),
+
                   const SizedBox(height: 16),
                   Text(
                     'Sign in with Google',

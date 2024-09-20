@@ -12,27 +12,27 @@ class Authviewmodel extends ChangeNotifier {
   bool isLoading = false;
   String? _userId;
 
-  // User data
   String _firstName = '';
   String _lastName = '';
   String _emailAddress = '';
   String _phoneNumber = '';
   DateTime? _birthday;
+  String _profilePicUrl = ''; // Variable to store profile picture URL
 
-  // Getters
   String get firstName => _firstName;
   String get lastName => _lastName;
   String get emailAddress => _emailAddress;
   String get phoneNumber => _phoneNumber;
   DateTime? get birthday => _birthday;
   String? get userId => _userId;
+  String get profilePicUrl => _profilePicUrl; // Getter for profile picture URL
 
-  // Check if user is already authenticated
   Future<void> checkAuthentication(BuildContext context) async {
     final User? user = _auth.currentUser;
     if (user != null) {
       _userId = user.uid;
       await fetchUserDataFromFirestore();
+      print(userId);
       Navigator.pushReplacementNamed(context, '/home');
     }
   }
@@ -64,7 +64,9 @@ class Authviewmodel extends ChangeNotifier {
       if (user != null) {
         _userId = user.uid;
         _emailAddress = user.email ?? '';
-        _phoneNumber = user.phoneNumber ?? '';
+        _phoneNumber = _phoneNumber ?? '';
+        _profilePicUrl = user.photoURL ?? ''; // Fetch profile picture URL
+        print("Profile picture URL: $_profilePicUrl");
         print("phone number is " + _phoneNumber);
         await _createUserInFirestore(); // Ensure this is awaited
         print('User signed in successfully with email: ${user.email}');
@@ -98,6 +100,7 @@ class Authviewmodel extends ChangeNotifier {
       _emailAddress = '';
       _phoneNumber = '';
       _birthday = null;
+      _profilePicUrl = ''; // Reset profile picture URL
 
       notifyListeners();
     } catch (e) {
@@ -110,7 +113,7 @@ class Authviewmodel extends ChangeNotifier {
 
     try {
       final DocumentSnapshot userDoc =
-          await _firestore.collection('users').doc(_userId).get();
+          await _firestore.collection('users_stomato').doc(_userId).get();
 
       if (userDoc.exists) {
         _firstName = userDoc['firstName'] ?? '';
@@ -118,11 +121,14 @@ class Authviewmodel extends ChangeNotifier {
         _emailAddress = userDoc['emailAddress'] ?? '';
         _phoneNumber = userDoc['phoneNumber'] ?? '';
         _birthday = (userDoc['birthday'] as Timestamp?)?.toDate();
+        _profilePicUrl =
+            userDoc['profilePicUrl'] ?? ''; // Fetch profile pic URL
 
         print('Fetched user data:');
         print('First Name: $_firstName');
         print('Last Name: $_lastName');
         print('Phone Number: $_phoneNumber');
+        print('Profile Picture URL: $_profilePicUrl');
 
         notifyListeners();
       } else {
@@ -141,12 +147,13 @@ class Authviewmodel extends ChangeNotifier {
 
     try {
       print("Creating user in Firestore for user ID: $_userId");
-      await _firestore.collection('users').doc(_userId).set({
+      await _firestore.collection('users_stomato').doc(_userId).set({
         'firstName': _firstName.isNotEmpty ? _firstName : null,
         'lastName': _lastName.isNotEmpty ? _lastName : null,
         'emailAddress': _emailAddress.isNotEmpty ? _emailAddress : null,
-        'phoneNumber': _phoneNumber.isNotEmpty ? _phoneNumber : null,
+        'phoneNumber': _phoneNumber,
         'birthday': _birthday != null ? _birthday : null,
+        'profilePicUrl': _profilePicUrl, // Save profile pic URL
       }, SetOptions(merge: true)); // Merge to update fields without overwriting
 
       print("User created successfully in Firestore");
@@ -160,12 +167,14 @@ class Authviewmodel extends ChangeNotifier {
     if (_userId == null) return;
 
     try {
-      await _firestore.collection('users').doc(_userId).update({
+      print('Phone number being saved to Firestore: $_phoneNumber');
+      await _firestore.collection('users_stomato').doc(_userId).update({
         'firstName': _firstName,
         'lastName': _lastName,
         'emailAddress': _emailAddress,
-        'phoneNumber': _phoneNumber,
+        'phoneNumber': _phoneNumber, // Ensure this is not null or empty
         'birthday': _birthday,
+        'profilePicUrl': _profilePicUrl,
       });
       print('User data updated successfully');
       notifyListeners();
@@ -190,8 +199,11 @@ class Authviewmodel extends ChangeNotifier {
   }
 
   void updatePhoneNumber(String phoneNumber) {
+    print("Updating before the phone number :$phoneNumber");
     _phoneNumber = phoneNumber;
-    updateUserInFirestore();
+    print("Updating after the phone number :$_phoneNumber");
+
+    updateUserInFirestore(); // This method should handle the Firestore update
   }
 
   void updateBirthday(DateTime birthday) {

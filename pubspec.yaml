@@ -2,7 +2,7 @@ name: hushh_for_students_ios
 description: "A new Flutter project."
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 1.25.0+25
+version: 1.26.0+26
 
 environment:
   sdk: ^3.5.1
@@ -40,3 +40,8 @@ flutter:
     - lib/assets/thapa.jpg
     - lib/assets/app_bg.jpeg
     - lib/assets/hush_logo.svg
+    - lib/assets/explore_nav.png
+    - lib/assets/home_nav.png
+    - lib/assets/profile_nav.png
+    - lib/assets/Frame.png
+    - lib/assets/aitlogoo.png

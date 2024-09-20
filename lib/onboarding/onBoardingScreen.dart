@@ -34,10 +34,10 @@ class OnboardingScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  SvgPicture.asset(
-                    'lib/assets/hush_logo.svg',
-                    width: 58,
-                    height: 76.34,
+                  Image.asset(
+                    'lib/assets/aitlogoo.png',
+                    width: 88,
+                    height: 106.34,
                   ),
                   const SizedBox(height: 40),
                   Padding(
@@ -61,7 +61,7 @@ class OnboardingScreen extends StatelessWidget {
                             tileMode: TileMode.mirror,
                           ).createShader(bounds),
                           child: Text(
-                            'hushh Connect',
+                            'stumato',
                             style: GoogleFonts.figtree(
                               fontSize: 28,
                               fontWeight: FontWeight.w700,
@@ -83,19 +83,19 @@ class OnboardingScreen extends StatelessWidget {
                             mainAxisSize: MainAxisSize.max,
                             children: [
                               RulesBox(
-                                textElemnt1: 'Be Authentic',
+                                textElemnt1: 'Secured Payments',
                                 textElement2:
-                                    'Ensure your profile, including photos and details, is accurate and truthful.',
+                                    'Ensure all transactions are protected with industry-standard encryption, offering users a safe and secure payment experience',
                               ),
                               RulesBox(
-                                textElemnt1: 'Prioritize Privacy',
+                                textElemnt1: 'Data Safety & Privacy',
                                 textElement2:
-                                    'Keep your personal information safe and interact respectfully with others.',
+                                    'User data is stored securely, adhering to the latest privacy regulations, and ensuring no unauthorized access to personal information.',
                               ),
                               RulesBox(
-                                textElemnt1: 'Report Concerns',
+                                textElemnt1: 'Ease of Access',
                                 textElement2:
-                                    'If you encounter any issues or inappropriate behavior, please report them immediately',
+                                    'Intuitive user interface with easy navigation, ensuring that users can browse, order, and pay for their meals effortlessly, catering to all levels of tech-savviness.',
                               ),
                             ],
                           ),

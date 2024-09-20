@@ -17,12 +17,13 @@ class AuthPhoneScreen extends StatefulWidget {
 }
 
 class _AuthPhoneScreenState extends State<AuthPhoneScreen> {
-  String? _errorText; // Track the error message
+  String? _errorText;
   final TextEditingController _phoneController = TextEditingController();
 
   void _validateAndProceed() async {
     final viewModel = Provider.of<Authviewmodel>(context, listen: false);
     final phone = _phoneController.text;
+
     if (phone.isEmpty) {
       setState(() {
         _errorText = 'Phone number cannot be empty';
@@ -34,12 +35,13 @@ class _AuthPhoneScreenState extends State<AuthPhoneScreen> {
     } else {
       final fullPhoneNumber = '+91$phone';
       print('Updating phone number to $fullPhoneNumber');
-      viewModel.updatePhoneNumber(fullPhoneNumber);
+      viewModel.updatePhoneNumber(fullPhoneNumber); // Await the update
 
       setState(() {
         _errorText = null;
       });
 
+      // Navigate to the next screen after updating phone number
       Navigator.push(
         context,
         MaterialPageRoute(
@@ -52,12 +54,11 @@ class _AuthPhoneScreenState extends State<AuthPhoneScreen> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    const double widthFactor = 0.85; // Set a width factor for responsiveness
+    const double widthFactor = 0.85;
 
     return Scaffold(
       body: Stack(
         children: [
-          // Background image
           Container(
             width: size.width,
             height: size.height,
@@ -70,21 +71,12 @@ class _AuthPhoneScreenState extends State<AuthPhoneScreen> {
           ),
           SafeArea(
             child: Padding(
-              padding: EdgeInsets.symmetric(
-                  horizontal: size.width * 0.05), // Reduced padding
+              padding: EdgeInsets.symmetric(horizontal: size.width * 0.05),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const GradientProgressBar(
-                    progress: 0.3, // Set the current step for the email screen
-                  ),
+                  const GradientProgressBar(progress: 0.3),
                   const SizedBox(height: 16),
-
-                  const Icon(
-                    Icons.close,
-                    color: Color(0xff7c8591),
-                    size: 40,
-                  ),
                   const SizedBox(height: 16),
                   Text(
                     'My Phone Number is',
@@ -95,7 +87,6 @@ class _AuthPhoneScreenState extends State<AuthPhoneScreen> {
                     ),
                   ),
                   const SizedBox(height: 36),
-                  // Make TextField responsive
                   SizedBox(
                     width: size.width * widthFactor,
                     child: Customtextbox(
@@ -106,7 +97,6 @@ class _AuthPhoneScreenState extends State<AuthPhoneScreen> {
                     ),
                   ),
                   const SizedBox(height: 36),
-                  // Make Button responsive
                   SizedBox(
                     width: size.width * widthFactor,
                     child: IAgreeButton(
@@ -119,7 +109,6 @@ class _AuthPhoneScreenState extends State<AuthPhoneScreen> {
               ),
             ),
           ),
-          // Circular Progress Indicator
           Consumer<Authviewmodel>(
             builder: (context, viewModel, child) {
               return viewModel.isLoading

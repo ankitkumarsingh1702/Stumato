@@ -219,6 +219,22 @@
           }
         },
         {
+          "client_id": "621906786515-ke5kif0p8ovkpcgi5pqp3hgpujs7khqv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.hushh_for_students_ios",
+            "certificate_hash": "44eafadcd712409c54560117fa52b154632966a1"
+          }
+        },
+        {
+          "client_id": "621906786515-tb85ekp9cd5utfib4t42l2jap17fv2ij.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.hushh_for_students_ios",
+            "certificate_hash": "9c49576e2e291ab14de4276d9bbb7edb01113b30"
+          }
+        },
+        {
           "client_id": "621906786515-6agfe0rtojgm3gh4g7fucn7jma9amue6.apps.googleusercontent.com",
           "client_type": 3
         }

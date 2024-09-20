@@ -3,11 +3,10 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:hushh_for_students_ios/MainAct/webact.dart';
 import 'package:hushh_for_students_ios/auth/authviewmodel.dart';
 import 'package:hushh_for_students_ios/firebase_options.dart';
+import 'package:hushh_for_students_ios/home.dart';
 import 'package:hushh_for_students_ios/onboarding/onBoardingScreen.dart';
-import 'package:hushh_for_students_ios/signout.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
@@ -36,9 +35,10 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
+      debugShowCheckedModeBanner: false,
       home: InitializerWidget(),
       routes: {
-        '/home': (context) => WebAct(),
+        '/home': (context) => MainScreen(),
         '/onboarding': (context) => const OnboardingScreen(),
       },
     );
