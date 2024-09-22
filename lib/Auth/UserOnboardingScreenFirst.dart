@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'googleAuthScreen.dart';
-import 'package:hushh_for_students_ios/Auth/UserOnboardingScreenFirst.dart'; // Ensure correct import
 
 class UserOnboardingScreenFirst extends StatefulWidget {
   const UserOnboardingScreenFirst({super.key});
@@ -12,8 +11,7 @@ class UserOnboardingScreenFirst extends StatefulWidget {
       _UserOnboardingScreenFirstState();
 }
 
-class _UserOnboardingScreenFirstState
-    extends State<UserOnboardingScreenFirst> {
+class _UserOnboardingScreenFirstState extends State<UserOnboardingScreenFirst> {
   bool isChecked = true; // Default checked
 
   // Function to launch the privacy policy link
@@ -27,134 +25,143 @@ class _UserOnboardingScreenFirstState
 
   @override
   Widget build(BuildContext context) {
+    // Set the app to immersive mode
+    // Optional: Uncomment the next line if you want to extend the background behind system overlays
+    // SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
+
     return Scaffold(
-      body: Container(
-        decoration: const BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage('lib/assets/app_bg.jpeg'), // Background image
-            fit: BoxFit.cover, // Ensures the image covers the whole screen
+      extendBodyBehindAppBar: true, // Extend body behind the app bar
+      resizeToAvoidBottomInset: false,
+      body: Stack(
+        children: [
+          // Background image layer
+          Positioned.fill(
+            child: Image.asset(
+              'lib/assets/app_bg.jpeg', // Replace with your image path
+              fit: BoxFit.cover,
+            ),
           ),
-        ),
-        child: SafeArea(
-          child: SingleChildScrollView(
-            padding: const EdgeInsets.only(top: 92.0, bottom: 20.0),
-            child: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Image.asset(
-                    'lib/assets/aitlogoo.png', // Logo image
-                    width: 88,
-                    height: 106.34,
-                  ),
-                  const SizedBox(height: 40),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text(
-                          'W E L C O M E   T O',
-                          style: GoogleFonts.figtree(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w700,
-                            color: Colors.white,
-                          ),
-                        ),
-                        ShaderMask(
-                          shaderCallback: (bounds) => const LinearGradient(
-                            colors: [
-                              Color(0xffe54d60),
-                              Color(0xffa342ff)
-                            ],
-                            tileMode: TileMode.mirror,
-                          ).createShader(bounds),
-                          child: Text(
-                            'stumato',
+
+          // Foreground content layer
+          SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.only(top: 92.0, bottom: 20.0),
+              child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Image.asset(
+                      'lib/assets/aitlogoo.png', // Logo image
+                      width: 88,
+                      height: 106.34,
+                    ),
+                    const SizedBox(height: 40),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            'W E L C O M E   T O',
                             style: GoogleFonts.figtree(
-                              fontSize: 28,
+                              fontSize: 16,
                               fontWeight: FontWeight.w700,
                               color: Colors.white,
                             ),
                           ),
-                        ),
-                        Text(
-                          'Next-gen App, shaping our campus!',
-                          style: GoogleFonts.figtree(
-                            fontSize: 17,
-                            fontWeight: FontWeight.w400,
-                            color: Colors.white,
-                          ),
-                        ),
-                        const SizedBox(height: 32),
-                        const RulesSection(),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(height: 5),
-                  // Terms and Privacy Checkbox
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Checkbox(
-                          value: isChecked,
-                          onChanged: (bool? newValue) {
-                            setState(() {
-                              isChecked = newValue!;
-                            });
-                          },
-                          checkColor: Colors.white,
-                          activeColor: Colors.transparent, // To match design
-                          side: const BorderSide(color: Colors.white), // Border color
-                        ),
-                        Expanded(
-                          child: GestureDetector(
-                            onTap: _launchPrivacyPolicyUrl,
-                            child: Row(
-                              children: [
-                                Expanded(
-                                  child: Text(
-                                    'Privacy, Terms & Conditions',
-                                    style: GoogleFonts.figtree(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w400,
-                                      color: Colors.white,
-                                      decoration: TextDecoration.underline,
-                                    ),
-                                  ),
-                                ),
-                                const SizedBox(width: 8),
-                                const Icon(
-                                  Icons.link,
-                                  color: Colors.white,
-                                  size: 18,
-                                ),
-                              ],
+                          ShaderMask(
+                            shaderCallback: (bounds) => const LinearGradient(
+                              colors: [Color(0xffe54d60), Color(0xffa342ff)],
+                              tileMode: TileMode.mirror,
+                            ).createShader(bounds),
+                            child: Text(
+                              'stumato',
+                              style: GoogleFonts.figtree(
+                                fontSize: 28,
+                                fontWeight: FontWeight.w700,
+                                color: Colors.white,
+                              ),
                             ),
                           ),
-                        ),
-                      ],
+                          Text(
+                            'Next-gen App, shaping our campus!',
+                            style: GoogleFonts.figtree(
+                              fontSize: 17,
+                              fontWeight: FontWeight.w400,
+                              color: Colors.white,
+                            ),
+                          ),
+                          const SizedBox(height: 32),
+                          const RulesSection(),
+                        ],
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 5),
-                  // "I Agree" button
-                  IAgreeButton(
-                    text: 'I Agree',
-                    onPressed: isChecked
-                        ? () {
-                      navigateToNextScreen(context);
-                    }
-                        : null,
-                    size: 127.0,
-                  ),
-                ],
+                    const SizedBox(height: 5),
+                    // Terms and Privacy Checkbox
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Checkbox(
+                            value: isChecked,
+                            onChanged: (bool? newValue) {
+                              setState(() {
+                                isChecked = newValue!;
+                              });
+                            },
+                            checkColor: Colors.white,
+                            activeColor: Colors.transparent, // To match design
+                            side: const BorderSide(
+                                color: Colors.white), // Border color
+                          ),
+                          Expanded(
+                            child: GestureDetector(
+                              onTap: _launchPrivacyPolicyUrl,
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    child: Text(
+                                      'Privacy, Terms & Conditions',
+                                      style: GoogleFonts.figtree(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w400,
+                                        color: Colors.white,
+                                        decoration: TextDecoration.underline,
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(width: 8),
+                                  const Icon(
+                                    Icons.link,
+                                    color: Colors.white,
+                                    size: 18,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 5),
+                    // "I Agree" button
+                    IAgreeButton(
+                      text: 'I Agree',
+                      onPressed: isChecked
+                          ? () {
+                              navigateToNextScreen(context);
+                            }
+                          : null,
+                      size: 127.0,
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
-        ),
+        ],
       ),
     );
   }
@@ -166,6 +173,8 @@ class _UserOnboardingScreenFirstState
     );
   }
 }
+
+// Rest of your code remains the same
 
 // Extracted RulesSection for better readability and performance
 class RulesSection extends StatelessWidget {
@@ -180,17 +189,17 @@ class RulesSection extends StatelessWidget {
         RulesBox(
           textElemnt1: 'Enhanced Dining Experience',
           textElement2:
-          'Enjoy a seamless dining experience with AI-powered recommendations and easy ordering.',
+              'Enjoy a seamless dining experience with AI-powered recommendations and easy ordering.',
         ),
         RulesBox(
           textElemnt1: 'Next-Gen Store',
           textElement2:
-          'Get access to the next generation of campus stores, providing fast and convenient service.',
+              'Get access to the next generation of campus stores, providing fast and convenient service.',
         ),
         RulesBox(
           textElemnt1: 'User-Friendly Navigation',
           textElement2:
-          'Navigate easily through the app to browse menus, place orders, and track your meal.',
+              'Navigate easily through the app to browse menus, place orders, and track your meal.',
         ),
       ],
     );
@@ -258,7 +267,8 @@ class IAgreeButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center( // Centering the button
+    return Center(
+      // Centering the button
       child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(

@@ -60,7 +60,8 @@ class _AuthUserDetailsScreenState extends State<AuthUserDetailsScreen> {
 
     try {
       // Create a reference to the Firestore collection
-      CollectionReference users = FirebaseFirestore.instance.collection('user_stumato');
+      CollectionReference users =
+          FirebaseFirestore.instance.collection('user_stumato');
 
       // Create a document with UID as the document ID
       await users.doc(uid).set({
@@ -73,7 +74,6 @@ class _AuthUserDetailsScreenState extends State<AuthUserDetailsScreen> {
         'created_at': FieldValue.serverTimestamp(),
       });
 
-      // Navigate to the main application screen or dashboard
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
@@ -139,6 +139,7 @@ class _AuthUserDetailsScreenState extends State<AuthUserDetailsScreen> {
           onPressed: () => Navigator.of(context).pop(),
         ),
       ),
+      resizeToAvoidBottomInset: false,
       body: Stack(
         children: [
           // Background image
@@ -149,7 +150,7 @@ class _AuthUserDetailsScreenState extends State<AuthUserDetailsScreen> {
             ),
           ),
           SafeArea(
-            child: SingleChildScrollView(
+            child: Padding(
               padding: EdgeInsets.symmetric(
                   horizontal: size.width * 0.05, vertical: size.height * 0.03),
               child: Column(
@@ -191,8 +192,10 @@ class _AuthUserDetailsScreenState extends State<AuthUserDetailsScreen> {
                       hintText: 'Phone Number',
                       keyboardType: TextInputType.phone,
                       inputFormatters: [
-                        FilteringTextInputFormatter.digitsOnly, // Only allow digits
-                        LengthLimitingTextInputFormatter(10), // Limit to 10 digits
+                        FilteringTextInputFormatter
+                            .digitsOnly, // Only allow digits
+                        LengthLimitingTextInputFormatter(
+                            10), // Limit to 10 digits
                       ],
                     ),
                   ),
@@ -214,7 +217,7 @@ class _AuthUserDetailsScreenState extends State<AuthUserDetailsScreen> {
                     initialDisplayDate: DateTime(2000),
                     maxDate: DateTime.now(),
                     monthViewSettings: const DateRangePickerMonthViewSettings(
-                      firstDayOfWeek: 1, // Monday
+                      firstDayOfWeek: 1,
                     ),
                   ),
                   const SizedBox(height: 24),
@@ -229,46 +232,46 @@ class _AuthUserDetailsScreenState extends State<AuthUserDetailsScreen> {
                     child: _isSaving
                         ? const Center(child: CircularProgressIndicator())
                         : ElevatedButton(
-                      onPressed: _saveUserDetails,
-                      style: ElevatedButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(vertical: 16),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(22.0),
-                        ),
-                        backgroundColor: Colors.transparent,
-                        shadowColor: Colors.transparent, // No shadow
-                      ),
-                      child: Ink(
-                        decoration: const BoxDecoration(
-                          gradient: LinearGradient(
-                            stops: [0.00, 1.00],
-                            colors: [
-                              Color(0xFFE54D60), // Start color
-                              Color(0xFFA342FF), // End color
-                            ],
-                            begin: Alignment.centerRight,
-                            end: Alignment.centerLeft,
-                          ),
-                          borderRadius:
-                          BorderRadius.all(Radius.circular(22.0)),
-                        ),
-                        child: Container(
-                          alignment: Alignment.center,
-                          constraints: const BoxConstraints(
-                            maxWidth: 342.0,
-                            minHeight: 44.0,
-                          ),
-                          child: Text(
-                            'Save Details',
-                            style: GoogleFonts.figtree(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
+                            onPressed: _saveUserDetails,
+                            style: ElevatedButton.styleFrom(
+                              padding: const EdgeInsets.symmetric(vertical: 16),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(22.0),
+                              ),
+                              backgroundColor: Colors.transparent,
+                              shadowColor: Colors.transparent, // No shadow
+                            ),
+                            child: Ink(
+                              decoration: const BoxDecoration(
+                                gradient: LinearGradient(
+                                  stops: [0.00, 1.00],
+                                  colors: [
+                                    Color(0xFFE54D60), // Start color
+                                    Color(0xFFA342FF), // End color
+                                  ],
+                                  begin: Alignment.centerRight,
+                                  end: Alignment.centerLeft,
+                                ),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(22.0)),
+                              ),
+                              child: Container(
+                                alignment: Alignment.center,
+                                constraints: const BoxConstraints(
+                                  maxWidth: 342.0,
+                                  minHeight: 44.0,
+                                ),
+                                child: Text(
+                                  'Save Details',
+                                  style: GoogleFonts.figtree(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
                             ),
                           ),
-                        ),
-                      ),
-                    ),
                   ),
                 ],
               ),
@@ -295,7 +298,8 @@ class AuthUserDetailsSuccessScreen extends StatelessWidget {
           Positioned.fill(
             child: Image.asset(
               'lib/assets/app_bg.jpeg', // Background image
-              fit: BoxFit.cover, // Ensures the image covers the entire background
+              fit: BoxFit
+                  .cover, // Ensures the image covers the entire background
             ),
           ),
           SafeArea(
@@ -327,7 +331,8 @@ class AuthUserDetailsSuccessScreen extends StatelessWidget {
                         Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => const MainAppScreen(), // Reference the new MainAppScreen from home.dart
+                            builder: (context) =>
+                                const MainAppScreen(), // Reference the new MainAppScreen from home.dart
                           ),
                         );
                       },
@@ -360,7 +365,6 @@ class AuthUserDetailsSuccessScreen extends StatelessWidget {
   }
 }
 
-// Custom TextBox Widget
 class CustomTextBox extends StatelessWidget {
   final TextEditingController controller;
   final String hintText;
@@ -396,7 +400,7 @@ class CustomTextBox extends StatelessWidget {
           borderSide: BorderSide.none,
         ),
         contentPadding:
-        const EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
+            const EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
       ),
     );
   }

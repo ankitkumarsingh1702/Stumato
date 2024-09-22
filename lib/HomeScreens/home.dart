@@ -25,14 +25,14 @@ class _MainAppScreenState extends State<MainAppScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   // final DataStoreUrl dataStoreUrl = DataStoreUrl(); // Assuming this class is defined elsewhere
 
-  StreamSubscription<DocumentSnapshot<Map<String, dynamic>>>? _userDocumentSubscription;
+  StreamSubscription<DocumentSnapshot<Map<String, dynamic>>>?
+      _userDocumentSubscription;
 
   @override
   void initState() {
     super.initState();
     _checkVersionAndUpdate();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      _showUserUidSnackbar();
       _listenToUserDocument();
     });
   }
@@ -51,8 +51,9 @@ class _MainAppScreenState extends State<MainAppScreen> {
       // No user is signed in, navigate to Onboarding
       Navigator.pushAndRemoveUntil(
         context,
-        MaterialPageRoute(builder: (context) => const UserOnboardingScreenFirst()),
-            (route) => false,
+        MaterialPageRoute(
+            builder: (context) => const UserOnboardingScreenFirst()),
+        (route) => false,
       );
       return;
     }
@@ -79,16 +80,18 @@ class _MainAppScreenState extends State<MainAppScreen> {
           // If document doesn't exist or fields are missing, navigate to Onboarding
           Navigator.pushAndRemoveUntil(
             context,
-            MaterialPageRoute(builder: (context) => const UserOnboardingScreenFirst()),
-                (route) => false,
+            MaterialPageRoute(
+                builder: (context) => const UserOnboardingScreenFirst()),
+            (route) => false,
           );
         }
       } else {
         // If document doesn't exist, navigate to Onboarding
         Navigator.pushAndRemoveUntil(
           context,
-          MaterialPageRoute(builder: (context) => const UserOnboardingScreenFirst()),
-              (route) => false,
+          MaterialPageRoute(
+              builder: (context) => const UserOnboardingScreenFirst()),
+          (route) => false,
         );
       }
     });
@@ -104,12 +107,13 @@ class _MainAppScreenState extends State<MainAppScreen> {
 
       final FirebaseFirestore firestore = FirebaseFirestore.instance;
       final DocumentReference versionUpdateRef =
-      firestore.collection('version_update_ios').doc('versionCodehfs');
+          firestore.collection('version_update_ios').doc('versionCodehfs');
 
       versionUpdateRef.snapshots().listen((DocumentSnapshot snapshot) {
         if (snapshot.exists) {
           String firestoreVersionCode = snapshot.get('versionCode') ?? '';
-          _showFlushBar(context, 'Firestore Version Code: $firestoreVersionCode');
+          _showFlushBar(
+              context, 'Firestore Version Code: $firestoreVersionCode');
 
           if (firestoreVersionCode != installedVersion) {
             _showFlushBar(context, 'Version mismatch: Updating app...');
@@ -133,7 +137,7 @@ class _MainAppScreenState extends State<MainAppScreen> {
     try {
       final FirebaseFirestore firestore = FirebaseFirestore.instance;
       final DocumentReference updateLinkRef =
-      firestore.collection('version_update_ios').doc('apkupdatedlink');
+          firestore.collection('version_update_ios').doc('apkupdatedlink');
 
       DocumentSnapshot documentSnapshot = await updateLinkRef.get();
 
@@ -222,8 +226,10 @@ class _MainAppScreenState extends State<MainAppScreen> {
   Future<String?> _getProfilePicUrl() async {
     User? user = FirebaseAuth.instance.currentUser;
     if (user != null) {
-      DocumentSnapshot userDoc =
-      await FirebaseFirestore.instance.collection('user_stumato').doc(user.uid).get();
+      DocumentSnapshot userDoc = await FirebaseFirestore.instance
+          .collection('user_stumato')
+          .doc(user.uid)
+          .get();
       return userDoc['profile_pic_url'];
     }
     return null;
@@ -282,7 +288,8 @@ class _MainAppScreenState extends State<MainAppScreen> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => const CouponScreen(), // Placeholder for coupon.dart
+                  builder: (context) =>
+                      const CouponScreen(), // Placeholder for coupon.dart
                 ),
               );
             },
@@ -301,7 +308,8 @@ class _MainAppScreenState extends State<MainAppScreen> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => const AnnouncementScreen(), // Placeholder for announcement.dart
+                  builder: (context) =>
+                      const AnnouncementScreen(), // Placeholder for announcement.dart
                 ),
               );
             },
@@ -359,7 +367,10 @@ class _MainAppScreenState extends State<MainAppScreen> {
     }
 
     try {
-      await FirebaseFirestore.instance.collection('user_stumato').doc(user.uid).delete();
+      await FirebaseFirestore.instance
+          .collection('user_stumato')
+          .doc(user.uid)
+          .delete();
       await user.delete();
 
       ScaffoldMessenger.of(context).showSnackBar(
@@ -371,8 +382,9 @@ class _MainAppScreenState extends State<MainAppScreen> {
 
       Navigator.pushAndRemoveUntil(
         context,
-        MaterialPageRoute(builder: (context) => const UserOnboardingScreenFirst()),
-            (route) => false,
+        MaterialPageRoute(
+            builder: (context) => const UserOnboardingScreenFirst()),
+        (route) => false,
       );
     } on FirebaseAuthException catch (e) {
       if (e.code == 'requires-recent-login') {
@@ -403,7 +415,8 @@ class _MainAppScreenState extends State<MainAppScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea( // Ensures UI does not overlap with system UI
+    return SafeArea(
+      // Ensures UI does not overlap with system UI
       child: Scaffold(
         key: _scaffoldKey,
         appBar: AppBar(
@@ -441,14 +454,14 @@ class _MainAppScreenState extends State<MainAppScreen> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) =>
-                                MyProfileScreen(user: FirebaseAuth.instance.currentUser),
+                            builder: (context) => MyProfileScreen(
+                                user: FirebaseAuth.instance.currentUser),
                           ),
                         );
                       },
                       child: const CircleAvatar(
                         backgroundImage:
-                        NetworkImage('https://via.placeholder.com/50'),
+                            NetworkImage('https://via.placeholder.com/50'),
                         radius: 18,
                       ),
                     );
@@ -458,8 +471,8 @@ class _MainAppScreenState extends State<MainAppScreen> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) =>
-                                MyProfileScreen(user: FirebaseAuth.instance.currentUser),
+                            builder: (context) => MyProfileScreen(
+                                user: FirebaseAuth.instance.currentUser),
                           ),
                         );
                       },
@@ -476,7 +489,8 @@ class _MainAppScreenState extends State<MainAppScreen> {
         ),
         drawer: _buildDrawer(),
         body: StreamBuilder<QuerySnapshot>(
-          stream: FirebaseFirestore.instance.collection('admin_stores').snapshots(),
+          stream:
+              FirebaseFirestore.instance.collection('admin_stores').snapshots(),
           builder: (context, snapshot) {
             if (snapshot.hasError) {
               return const Center(
@@ -523,43 +537,46 @@ class _MainAppScreenState extends State<MainAppScreen> {
                     ),
                     elevation: 4,
                     child: Column(
-                      mainAxisSize: MainAxisSize.min, // Prevents the Column from expanding
+                      mainAxisSize: MainAxisSize
+                          .min, // Prevents the Column from expanding
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Expanded( // Makes the image take up available space
+                        Expanded(
+                          // Makes the image take up available space
                           child: storeImageUrl != null
                               ? ClipRRect(
-                            borderRadius: const BorderRadius.vertical(
-                                top: Radius.circular(10)),
-                            child: Image.network(
-                              storeImageUrl,
-                              width: double.infinity,
-                              fit: BoxFit.cover,
-                              errorBuilder: (context, error, stackTrace) {
-                                return Container(
+                                  borderRadius: const BorderRadius.vertical(
+                                      top: Radius.circular(10)),
+                                  child: Image.network(
+                                    storeImageUrl,
+                                    width: double.infinity,
+                                    fit: BoxFit.cover,
+                                    errorBuilder: (context, error, stackTrace) {
+                                      return Container(
+                                        color: Colors.grey[300],
+                                        child: const Icon(
+                                          Icons.broken_image,
+                                          size: 50,
+                                          color: Colors.grey,
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                )
+                              : Container(
                                   color: Colors.grey[300],
                                   child: const Icon(
-                                    Icons.broken_image,
+                                    Icons.store,
                                     size: 50,
                                     color: Colors.grey,
                                   ),
-                                );
-                              },
-                            ),
-                          )
-                              : Container(
-                            color: Colors.grey[300],
-                            child: const Icon(
-                              Icons.store,
-                              size: 50,
-                              color: Colors.grey,
-                            ),
-                          ),
+                                ),
                         ),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Column(
-                            mainAxisSize: MainAxisSize.min, // Prevents inner Column from expanding
+                            mainAxisSize: MainAxisSize
+                                .min, // Prevents inner Column from expanding
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
@@ -584,16 +601,19 @@ class _MainAppScreenState extends State<MainAppScreen> {
                               ),
                               const SizedBox(height: 8),
                               SizedBox(
-                                width: double.infinity, // Makes the button stretch horizontally
+                                width: double
+                                    .infinity, // Makes the button stretch horizontally
                                 child: ElevatedButton(
                                   onPressed: () async {
-                                    if (storeURL != null && storeURL.isNotEmpty) {
+                                    if (storeURL != null &&
+                                        storeURL.isNotEmpty) {
                                       _visitStore(storeURL, storeName);
                                     } else {
-                                      ScaffoldMessenger.of(context).showSnackBar(
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
                                         const SnackBar(
-                                          content:
-                                          Text('Store URL is not available.'),
+                                          content: Text(
+                                              'Store URL is not available.'),
                                           backgroundColor: Colors.orange,
                                         ),
                                       );
