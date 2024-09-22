@@ -1,3 +1,4 @@
+import 'dart:async'; // Added for StreamSubscription
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -11,7 +12,7 @@ import 'profilescreen.dart';
 import 'AdminLoginScreen.dart';
 import '../Auth/UserOnboardingScreenFirst.dart';
 import 'package:hushh_for_students_ios/MiniStore/hfsministore.dart'; // Ensure correct path
-import 'package:hushh_for_students_ios/MainAct/DataStoreUrl.dart'; // Ensure correct path
+// import 'package:hushh_for_students_ios/MainAct/DataStoreUrl.dart'; // Ensure correct path
 
 class MainAppScreen extends StatefulWidget {
   const MainAppScreen({super.key});
@@ -22,7 +23,9 @@ class MainAppScreen extends StatefulWidget {
 
 class _MainAppScreenState extends State<MainAppScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  final DataStoreUrl dataStoreUrl = DataStoreUrl(); // Assuming this class is defined elsewhere
+  // final DataStoreUrl dataStoreUrl = DataStoreUrl(); // Assuming this class is defined elsewhere
+
+  StreamSubscription<DocumentSnapshot<Map<String, dynamic>>>? _userDocumentSubscription;
 
   @override
   void initState() {
@@ -30,6 +33,64 @@ class _MainAppScreenState extends State<MainAppScreen> {
     _checkVersionAndUpdate();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _showUserUidSnackbar();
+      _listenToUserDocument();
+    });
+  }
+
+  @override
+  void dispose() {
+    _userDocumentSubscription?.cancel();
+    super.dispose();
+  }
+
+  /// Listens to user document changes and navigates accordingly
+  void _listenToUserDocument() {
+    User? user = FirebaseAuth.instance.currentUser;
+
+    if (user == null) {
+      // No user is signed in, navigate to Onboarding
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (context) => const UserOnboardingScreenFirst()),
+            (route) => false,
+      );
+      return;
+    }
+
+    _userDocumentSubscription = FirebaseFirestore.instance
+        .collection('user_stumato')
+        .doc(user.uid)
+        .snapshots()
+        .listen((DocumentSnapshot<Map<String, dynamic>> snapshot) {
+      if (!mounted) return; // Check if widget is still mounted
+      if (snapshot.exists) {
+        Map<String, dynamic>? data = snapshot.data();
+        if (data != null &&
+            data.containsKey('first_name') &&
+            data.containsKey('last_name') &&
+            data.containsKey('phone_number') &&
+            data.containsKey('email') &&
+            data.containsKey('birthday') &&
+            data.containsKey('profile_pic_url') &&
+            data.containsKey('created_at')) {
+          // All required fields are present, stay on MainAppScreen
+          // Maybe do nothing
+        } else {
+          // If document doesn't exist or fields are missing, navigate to Onboarding
+          Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (context) => const UserOnboardingScreenFirst()),
+                (route) => false,
+          );
+        }
+      } else {
+        // If document doesn't exist, navigate to Onboarding
+        Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (context) => const UserOnboardingScreenFirst()),
+              (route) => false,
+        );
+      }
     });
   }
 
@@ -168,7 +229,6 @@ class _MainAppScreenState extends State<MainAppScreen> {
     return null;
   }
 
-  /// Builds the navigation drawer
   /// Builds the navigation drawer
   Drawer _buildDrawer() {
     return Drawer(
@@ -601,13 +661,13 @@ class ProductCard extends StatelessWidget {
   final String imagePath;
   final String title;
   final String subtitle;
-  final DataStoreUrl dataStoreUrl;
+  // final DataStoreUrl dataStoreUrl;
 
   const ProductCard({
     required this.imagePath,
     required this.title,
     required this.subtitle,
-    required this.dataStoreUrl,
+    // required this.dataStoreUrl,
     Key? key,
   }) : super(key: key);
 

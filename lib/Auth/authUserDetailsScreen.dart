@@ -3,8 +3,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/services.dart';
 import '../HomeScreens/home.dart';
-
 
 class AuthUserDetailsScreen extends StatefulWidget {
   final User? user;
@@ -49,10 +49,18 @@ class _AuthUserDetailsScreenState extends State<AuthUserDetailsScreen> {
       return;
     }
 
+    // Validate the phone number
+    if (!isPhoneNumberValid(phoneNumber)) {
+      setState(() {
+        _errorText = 'Please enter a valid 10-digit phone number.';
+        _isSaving = false;
+      });
+      return;
+    }
+
     try {
       // Create a reference to the Firestore collection
-      CollectionReference users =
-      FirebaseFirestore.instance.collection('user_stumato');
+      CollectionReference users = FirebaseFirestore.instance.collection('user_stumato');
 
       // Create a document with UID as the document ID
       await users.doc(uid).set({
@@ -91,13 +99,18 @@ class _AuthUserDetailsScreenState extends State<AuthUserDetailsScreen> {
     });
   }
 
+  // Function to validate phone number
+  bool isPhoneNumberValid(String phoneNumber) {
+    final regex = RegExp(r'^[0-9]{10}$'); // Ensures exactly 10 digits
+    return regex.hasMatch(phoneNumber);
+  }
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     const double widthFactor = 0.85;
 
     return Scaffold(
-      // Custom AppBar with gradient from Figma design
       appBar: AppBar(
         title: Text(
           'Your Details',
@@ -114,7 +127,6 @@ class _AuthUserDetailsScreenState extends State<AuthUserDetailsScreen> {
               colors: [
                 Color.fromRGBO(18, 24, 60, 1.0), // Start color
                 Color.fromRGBO(42, 57, 122, 1.0), // End color
-
               ],
               begin: Alignment.centerRight,
               end: Alignment.centerLeft,
@@ -133,7 +145,7 @@ class _AuthUserDetailsScreenState extends State<AuthUserDetailsScreen> {
           Positioned.fill(
             child: Image.asset(
               'lib/assets/app_bg.jpeg', // Background image
-              fit: BoxFit.cover, // Ensures the image covers the entire background
+              fit: BoxFit.cover, // Ensures the image covers the whole screen
             ),
           ),
           SafeArea(
@@ -143,9 +155,6 @@ class _AuthUserDetailsScreenState extends State<AuthUserDetailsScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // const GradientProgressBar(
-                  //   progress: 0.2, // Update progress as per the step
-                  // ),
                   const SizedBox(height: 24),
                   Text(
                     'Complete Your Profile',
@@ -181,6 +190,10 @@ class _AuthUserDetailsScreenState extends State<AuthUserDetailsScreen> {
                       controller: _phoneNumberController,
                       hintText: 'Phone Number',
                       keyboardType: TextInputType.phone,
+                      inputFormatters: [
+                        FilteringTextInputFormatter.digitsOnly, // Only allow digits
+                        LengthLimitingTextInputFormatter(10), // Limit to 10 digits
+                      ],
                     ),
                   ),
                   const SizedBox(height: 16),
@@ -347,18 +360,19 @@ class AuthUserDetailsSuccessScreen extends StatelessWidget {
   }
 }
 
-
 // Custom TextBox Widget
 class CustomTextBox extends StatelessWidget {
   final TextEditingController controller;
   final String hintText;
   final TextInputType? keyboardType;
+  final List<TextInputFormatter>? inputFormatters;
 
   const CustomTextBox({
     Key? key,
     required this.controller,
     required this.hintText,
     this.keyboardType,
+    this.inputFormatters,
   }) : super(key: key);
 
   @override
@@ -366,6 +380,7 @@ class CustomTextBox extends StatelessWidget {
     return TextField(
       controller: controller,
       keyboardType: keyboardType ?? TextInputType.text,
+      inputFormatters: inputFormatters,
       style: GoogleFonts.figtree(
         color: Colors.white,
       ),
@@ -383,24 +398,6 @@ class CustomTextBox extends StatelessWidget {
         contentPadding:
         const EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
       ),
-    );
-  }
-}
-
-// Custom Gradient Progress Bar (Updated Progress)
-class GradientProgressBar extends StatelessWidget {
-  final double progress;
-
-  const GradientProgressBar({Key? key, required this.progress})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return LinearProgressIndicator(
-      value: progress,
-      valueColor: const AlwaysStoppedAnimation<Color>(Color(0xFFE54D60)),
-      backgroundColor: const Color(0xFFA342FF),
-      minHeight: 8,
     );
   }
 }

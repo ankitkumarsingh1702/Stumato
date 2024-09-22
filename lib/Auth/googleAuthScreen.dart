@@ -27,9 +27,10 @@ class _GoogleAuthScreenState extends State<GoogleAuthScreen> {
           Positioned.fill(
             child: Image.asset(
               'lib/assets/app_bg.jpeg', // Background image
-              fit: BoxFit.cover, // Ensures the image covers the entire background
+              fit: BoxFit.cover, // Ensures the image covers the whole screen
             ),
           ),
+
           SafeArea(
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: size.width * 0.05),
@@ -112,7 +113,7 @@ class _GoogleAuthScreenState extends State<GoogleAuthScreen> {
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
                                 content: Text(
-                                  'Welcome $userName!\nYour user ID is $userId',
+                                  'Welcome, $userName! Step into the future with Stumato',
                                   style: GoogleFonts.figtree(
                                     fontSize: 16,
                                     fontWeight: FontWeight.w600,

@@ -2,7 +2,7 @@ name: hushh_for_students_ios
 description: "A new Flutter project."
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 1.26.0+26
+version: 1.28.0+28
 
 environment:
   sdk: ^3.5.1
