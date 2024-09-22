@@ -13,8 +13,18 @@ dependencies:
   cupertino_icons: ^1.0.8
   webview_flutter: ^4.9.0
   url_launcher: ^6.3.0
+
+
+
+
   firebase_core: ^3.4.0
+  firebase_auth: ^5.3.0
+  google_sign_in: ^6.2.1
   cloud_firestore: ^5.4.0
+  firebase_storage: ^12.3.1
+  firebase_analytics: ^11.3.2
+
+
   package_info_plus: ^8.0.2
   fluttertoast: ^8.2.8
   google_fonts: ^6.2.1
@@ -23,19 +33,26 @@ dependencies:
   app_tutorial: ^1.0.6
   another_flushbar: ^1.12.30
 
+  syncfusion_flutter_datepicker: ^27.1.48
+
+  image_picker: ^1.1.2
+  file_picker: ^8.1.2
+
+
 
 
 dev_dependencies:
-  flutter_launcher_icons: ^0.13.1
   flutter_test:
     sdk: flutter
   flutter_lints: ^4.0.0
+  flutter_launcher_icons: ^0.10.0
+
 
 flutter_icons:
-  image_path: "lib/assets/app_logo.png"
+  image_path: "lib/assets/aitlogoo.png"
   android: true
   ios: true
-
+  adaptive_icon_background: "#ffffff"
 
 
 
@@ -46,5 +63,6 @@ flutter:
   assets:
     - lib/assets/oac.jpg
     - lib/assets/thapa.jpg
-    - lib/assets/app_logo.png
+    - lib/assets/aitlogoo.png
     - lib/assets/amzon_vc_quiz.jpg
+    - lib/assets/app_bg.jpeg
